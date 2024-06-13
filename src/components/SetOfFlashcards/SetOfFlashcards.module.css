@@ -1,9 +1,9 @@
 .setCard {
+	margin-bottom: 2em;
 	padding: 1em;
 	background-color: var(--light);
-	border-radius: 8px;
-
 	border: 1px solid var(--intensiveBlue);
+	border-radius: 8px;
 }
 
 .setTitle {

@@ -14,6 +14,9 @@ function App() {
 
       <main className={styles.setOfFlashcardsContainer}>
       <SetOfFlashcards></SetOfFlashcards>
+      <SetOfFlashcards></SetOfFlashcards>
+      <SetOfFlashcards></SetOfFlashcards>
+      <SetOfFlashcards></SetOfFlashcards>
       </main>
 
       </div>
