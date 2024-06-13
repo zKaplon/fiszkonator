@@ -1,0 +1,32 @@
+.setCard {
+	padding: 1em;
+	background-color: var(--light);
+	border-radius: 8px;
+
+	border: 1px solid var(--intensiveBlue);
+}
+
+.setTitle {
+	font-size: 2rem;
+	text-align: center;
+	text-transform: uppercase;
+	color: var(--intensiveBlue);
+}
+
+.setDescription {
+	margin: 1em 0;
+	color: var(--dark);
+}
+
+.icons {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 1em;
+}
+
+.icons > svg {
+	padding: 0.5em;
+	font-size: 1.6rem;
+	color: var(--intensiveBlue);
+}
