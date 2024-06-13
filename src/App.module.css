@@ -1,0 +1,58 @@
+:root {
+	--cream: #fff9d0;
+	--lightBlue: #caf4ff;
+	--mediumBlue: #a0deff;
+	--intensiveBlue: #5ab2ff;
+}
+html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 62.5%;
+}
+
+body {
+    height: 100%;
+	margin: 0;
+	font-family: 'Roboto', sans-serif;
+}
+
+.background {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	min-height: 100%;
+	background: rgb(90, 178, 255);
+	background: linear-gradient(
+		180deg,
+		rgba(90, 178, 255, 1) 7%,
+		rgba(160, 222, 255, 1) 47%,
+		rgba(202, 244, 255, 1) 100%
+	);
+}
+
+.siteTitle {
+	padding: 0.4em;
+	font-size: 3rem;
+	text-align: center;
+}
+
+.titleBackground {
+	margin: 4em 0;
+	background-color: white;
+	border-radius: 8px;
+    box-shadow: 4px 4px 5px rgb(151, 151, 151);
+}
+.setOfFlashcardsContainer {
+    display: flex;
+    flex-direction: column;
+	height: 100%;
+	width: 65%;
+}
+
+.setOfFlashcards {
+	height: 150px;
+    margin-bottom: 3em;
+	background-color: white;
+	border-radius: 8px;
+}
