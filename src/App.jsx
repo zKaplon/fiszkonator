@@ -1,12 +1,12 @@
-import './App.module.css'
+import "./App.module.css";
+import { SetOfFlashcards } from "./components/SetOfFlashcards/SetOfFlashcards";
 
 function App() {
-  
-
-  return (
-    <>
-    </>
-  )
+	return (
+		<>
+			<SetOfFlashcards></SetOfFlashcards>
+		</>
+	);
 }
 
-export default App
+export default App;
