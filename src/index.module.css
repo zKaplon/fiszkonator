@@ -1,0 +1,24 @@
+:root {
+	--light: #fcfcfc;
+	--cream: #fff9d0;
+	--lightBlue: #caf4ff;
+	--mediumBlue: #a0deff;
+	--intensiveBlue: #5ab2ff;
+	--dark: #1c1c1c;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	height: 100%;
+	margin: 0;
+	font-family: "Roboto", sans-serif;
+}

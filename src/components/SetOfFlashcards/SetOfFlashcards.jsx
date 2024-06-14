@@ -9,8 +9,6 @@ export const SetOfFlashcards = () => {
 			<p className={styles.setDescription}>
 				Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consequuntur
 				corrupti sit reprehenderit perspiciatis animi recusandae ducimus,
-				excepturi quis molestias dignissimos id? Numquam, reiciendis nihil
-				veniam atque voluptates consequuntur corrupti id.
 			</p>
 			<div className={styles.icons}>
 				<EditIcon></EditIcon>
