@@ -1,4 +1,5 @@
 .setCard {
+	max-width: 250px;
 	margin-bottom: 2em;
 	padding: 1em;
 	background-color: var(--light);
@@ -29,4 +30,50 @@
 	padding: 0.5em;
 	font-size: 1.6rem;
 	color: var(--intensiveBlue);
+}
+
+/* TABLET */
+@media (min-width: 576px) {
+	.setCard {
+		max-width: 350px;
+		padding: 2em;
+	}
+
+	.setTitle {
+		font-size: 3rem;
+	}
+
+	.setDescription {
+		font-size: 1.4rem;
+	}
+	.icons{
+		justify-content: flex-end;
+	}
+
+	.icons > svg {
+		font-size: 2rem;
+	}
+}
+
+/* DESKTOP */
+@media (min-width: 768px) {
+	.setCard {
+		margin-bottom: 0;
+	}
+
+	.setTitle {
+		font-size: 3.6rem;
+	}
+
+	.setDescription {
+		font-size: 1.6rem;
+	}
+
+	.icons > svg {
+		font-size: 2.4rem;
+	}
+}
+
+@media (min-width: 992px) {
+
 }

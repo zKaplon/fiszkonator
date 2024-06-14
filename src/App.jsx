@@ -12,7 +12,7 @@ function App() {
 				<h1 className={styles.siteTitle}>FISZKONATOR</h1>
 			</header>
 
-      <main className={styles.setOfFlashcardsContainer}>
+      <main className={styles.setsOfFlashcardsContainer}>
       <SetOfFlashcards></SetOfFlashcards>
       <SetOfFlashcards></SetOfFlashcards>
       <SetOfFlashcards></SetOfFlashcards>
