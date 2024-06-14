@@ -1,0 +1,9 @@
+.addBtn {
+    height: 4em;
+    width: 4em;
+    margin-bottom: 2em;
+	background-color: var(--light);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+}
