@@ -1,6 +1,7 @@
 import styles from "./SetOfFlashcards.module.css";
-import { EditIcon } from "../icons/EditIcon/EditIcon";
-import { DeleteIcon } from "../icons/DeleteIcon/DeleteIcon";
+import { Button } from "../Button/Button";
+import { faTrash} from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare} from "@fortawesome/free-solid-svg-icons";
 
 export const SetOfFlashcards = () => {
 	return (
@@ -11,8 +12,8 @@ export const SetOfFlashcards = () => {
 				corrupti sit reprehenderit perspiciatis animi recusandae ducimus,
 			</p>
 			<div className={styles.icons}>
-				<EditIcon></EditIcon>
-				<DeleteIcon></DeleteIcon>
+				<Button icon={faPenToSquare} btnClass='editBtn'></Button>
+				<Button icon={faTrash} btnClass='deleteBtn'></Button>
 			</div>
 		</div>
 	);

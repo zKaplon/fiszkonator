@@ -1,0 +1,43 @@
+.btnReset {
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	color: var(--intensiveBlue);
+	cursor: pointer;
+}
+
+.addBtn {
+	height: 4em;
+	width: 4em;
+	margin-bottom: 2em;
+	background-color: var(--light);
+	border: none;
+	border-radius: 50%;
+	cursor: pointer;
+}
+
+.editBtn,
+.deleteBtn {
+	padding: 0.8em;
+	width: 3em;
+}
+
+@media (min-width: 576px) {
+	.editBtn,
+	.deleteBtn {
+		padding: 1em;
+		width: 4em;
+	}
+
+	.addBtn {
+		margin: 2em 0 3em;
+	}
+}
+
+@media (min-width: 768px) {
+	.addBtn {
+		height: 6em;
+		width: 6em;
+		margin: 4em 0;
+	}
+}
