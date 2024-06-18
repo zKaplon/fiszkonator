@@ -1,6 +1,7 @@
 import styles from './App.module.css'
 import { SetOfFlashcards } from './components/SetOfFlashcards/SetOfFlashcards'
-import { AddNewCardButton } from './components/AddNewCardButton/AddNewCardButton'
+import { Button } from './components/Button/Button'
+import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 
 function App() {
 	return (
@@ -16,7 +17,11 @@ function App() {
       <SetOfFlashcards></SetOfFlashcards>
       <SetOfFlashcards></SetOfFlashcards>
       </main>
-      <AddNewCardButton></AddNewCardButton>
+      {/* <AddNewCardButton></AddNewCardButton> */}
+      
+      {/*  */}
+  <Button icon={faCirclePlus} btnClass={`${'addBtn'}`}></Button>
+
       </div>
 		</>
 	)
