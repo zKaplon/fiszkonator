@@ -14,6 +14,12 @@ let btnType;
 	if (btnClass === 'deleteBtn') {
 		btnType = styles.deleteBtn;
 	}
+	if (btnClass === 'confirmBtn') {
+		btnType = styles.confirmBtn;
+	}
+	if (btnClass === 'declineBtn') {
+		btnType = styles.declineBtn;
+	}
 	
 
 	return (
