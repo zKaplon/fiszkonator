@@ -3,6 +3,8 @@ import { SetOfFlashcards } from "./components/SetOfFlashcards/SetOfFlashcards";
 import { Button } from "./components/Button/Button";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { Flashcards } from "./components/Flashcards/Flashcards";
+import {SetOfFlashcardsList} from './components/SetOfFlashcardsList/SetOfFlashcardsList'
+
 
 function App() {
 	return (
@@ -13,16 +15,12 @@ function App() {
 				</header>
 
 				<main className={styles.setsOfFlashcardsContainer}>
-					{/* <SetOfFlashcards></SetOfFlashcards>
-					<SetOfFlashcards></SetOfFlashcards>
-					<SetOfFlashcards></SetOfFlashcards>
-					<SetOfFlashcards></SetOfFlashcards> */}
-					<Flashcards></Flashcards>
+					<SetOfFlashcardsList></SetOfFlashcardsList>
 				</main>
-				{/* <Button icon={faCirclePlus} btnClass={`${'addBtn'}`}></Button> */}
+
+				<Button icon={faCirclePlus} btnClass={`${'addBtn'}`}></Button>
 			</div>
 		</>
 	);
 }
-
 export default App;
