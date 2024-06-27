@@ -1,0 +1,198 @@
+.container {
+	margin: 5em 0;
+	min-width: 60%;
+	max-width: 90%;
+	padding: 2em;
+	background-color: var(--light);
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+.wrapper {
+	text-align: center;
+}
+
+.addingSetTitle {
+	margin: 0.5em 0 1em;
+	font-size: 3.6rem;
+	color: var(--intensiveBlue);
+}
+
+.oneInfo {
+	margin: 2em 0;
+}
+
+.label {
+	font-size: 2rem;
+	margin-left: 1em;
+}
+
+.input,
+.textarea {
+	margin-top: 0.8em;
+	padding: 0.4em;
+	width: 100%;
+	font-size: 1.8rem;
+	border: none;
+	border: 2px solid var(--mediumBlue);
+	border-radius: 8px;
+}
+
+.textarea {
+	min-height: 20vh;
+	max-height: 50vh;
+	max-width: 100%;
+	min-width: 100%;
+}
+
+.input:focus,
+.textarea:focus {
+	border: 2px solid var(--intensiveBlue);
+	background-color: var(--lightBlue);
+	outline: none;
+}
+
+.addingConceptsTitle {
+	margin-top: 2em;
+	font-size: 4rem;
+	color: var(--dark);
+	text-align: center;
+}
+
+.addingConcepts {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 2em;
+	align-items: center;
+	width: 100%;
+	margin: 2em 0;
+	padding: 2em;
+	border: 2px solid var(--mediumBlue);
+	border-radius: 8px;
+}
+
+.conceptContainer,
+.definitionContainer {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.conceptContainer label,
+.definitionContainer label {
+	margin: 0.2em 1em 0;
+	font-size: 1.6rem;
+	color: var(--intensiveBlue);
+}
+
+.conceptContainer input,
+.definitionContainer input {
+	padding: 0.2em;
+	font-size: 1.6rem;
+	background: transparent;
+	border: none;
+	border-bottom: 1px solid var(--intensiveBlue);
+}
+
+.conceptContainer input:focus,
+.definitionContainer input:focus {
+	border-bottom: 3px solid var(--intensiveBlue);
+	outline: none;
+}
+
+.conceptContainer input:focus + label,
+.definitionContainer input:focus + label {
+	color: var(--intensiveBlue);
+	font-weight: bold;
+}
+
+.buttons {
+	margin: 1em 0;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	gap: 1em;
+}
+
+.saveBtn,
+.cancelBtn {
+	padding: 0.6em;
+	font-size: 1.6rem;
+	background: transparent;
+	border: none;
+	border: 2px solid var(--intensiveBlue);
+	border-radius: 8px;
+
+	cursor: pointer;
+}
+
+.saveBtn:hover,
+.cancelBtn:hover {
+	background-color: var(--lightBlue);
+}
+
+@media (min-width: 576px) {
+	.addingSetTitle {
+		font-size: 5rem;
+	}
+
+	.addingConcepts {
+		flex-direction: row;
+	}
+}
+
+@media (min-width: 992px) {
+	.container {
+		min-width: 70%;
+		padding: 4em;
+		background-color: var(--light);
+	}
+
+	.addingSetTitle {
+		font-size: 4.6rem;
+	}
+
+	.oneInfo {
+		margin: 4em 0;
+	}
+
+	.label {
+		font-size: 1.8rem;
+		margin-left: 2em;
+	}
+
+	.input,
+	.textarea {
+		margin-top: 1em;
+		font-size: 1.8rem;
+	}
+
+	.addingConcepts {
+		gap: 4em;
+		margin: 4em 0;
+		padding: 3em;
+	}
+
+	.conceptContainer label,
+	.definitionContainer label {
+		font-size: 2rem;
+	}
+
+	.conceptContainer input,
+	.definitionContainer input {
+		padding: 0.6em;
+		font-size: 1.8rem;
+	}
+
+	.buttons {
+		margin: 2em 0;
+		gap: 2em;
+	}
+
+	.saveBtn,
+	.cancelBtn {
+		padding: 0.8em 1.6em;
+		font-size: 2.2rem;
+	}
+}
