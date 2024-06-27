@@ -19,6 +19,9 @@ export function Button({ icon, btnClass, onClick }) {
 	if (btnClass === "declineBtn") {
 		btnType = styles.declineBtn;
 	}
+	if (btnClass === "xBtn") {
+		btnType = styles.xBtn;
+	}
 
 	return (
 		<button className={`${styles.btnReset} ${btnType}`} onClick={onClick}>
