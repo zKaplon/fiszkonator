@@ -2,7 +2,7 @@ import styles from "./AddSetOfFlashcards.module.css";
 import { Button } from "../Button/Button.jsx";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 
-export function AddSetOfFlashcards() {
+export function AddSetOfFlashcards({ onAddBtnClick, onCancelBtnClick }) {
 	return (
 		<div className={styles.container}>
 			<div className={styles.wrapper}>
@@ -40,8 +40,12 @@ export function AddSetOfFlashcards() {
 			</div>
 
 			<div className={styles.buttons}>
-				<button className={styles.saveBtn}>Zapisz</button>
-				<button className={styles.cancelBtn}>Anuluj</button>
+				<button className={styles.saveBtn} onClick={onAddBtnClick}>
+					Zapisz
+				</button>
+				<button className={styles.cancelBtn} onClick={onCancelBtnClick}>
+					Anuluj
+				</button>
 			</div>
 		</div>
 	);

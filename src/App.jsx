@@ -1,13 +1,17 @@
 import styles from "./App.module.css";
-// import { SetOfFlashcards } from "./components/SetOfFlashcards/SetOfFlashcards";
-// import { Button } from "./components/Button/Button";
-// import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
-// import { Flashcards } from "./components/Flashcards/Flashcards";
-// import {SetOfFlashcardsList} from './components/SetOfFlashcardsList/SetOfFlashcardsList'
+import { Button } from "./components/Button/Button";
+import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
+import { SetOfFlashcardsList } from "./components/SetOfFlashcardsList/SetOfFlashcardsList";
 import { AddSetOfFlashcards } from "./components/AddSetOfFlashcards/AddSetOfFlashcards";
-
+import { useState } from "react";
 
 function App() {
+	const [isEditingModeShown, setIsEditingModeShown] = useState(false);
+
+	const changeVisibilityOfEditingMode = () => {
+		setIsEditingModeShown((prevValue) => !prevValue);
+	};
+
 	return (
 		<>
 			<div className={styles.background}>
@@ -16,11 +20,25 @@ function App() {
 				</header>
 
 				<main className={styles.setsOfFlashcardsContainer}>
-					{/* <SetOfFlashcardsList></SetOfFlashcardsList> */}
-					<AddSetOfFlashcards></AddSetOfFlashcards>
+					{isEditingModeShown ? (
+						<AddSetOfFlashcards
+							onAddBtnClick={changeVisibilityOfEditingMode}
+							onCancelBtnClick={changeVisibilityOfEditingMode}
+						></AddSetOfFlashcards>
+					) : (
+						<SetOfFlashcardsList onEditBtnClick={changeVisibilityOfEditingMode}></SetOfFlashcardsList>
+					)}
 				</main>
 
-				{/* <Button icon={faCirclePlus} btnClass={`${'addBtn'}`}></Button> */}
+				{isEditingModeShown ? (
+					""
+				) : (
+					<Button
+						icon={faCirclePlus}
+						btnClass={`${"addBtn"}`}
+						onClick={changeVisibilityOfEditingMode}
+					></Button>
+				)}
 			</div>
 		</>
 	);
