@@ -1,0 +1,93 @@
+.card {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	height: 60vh;
+	width: 100%;
+	cursor: pointer;
+	perspective: 1000px;
+
+}
+
+.cardFront,
+.cardBack {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	padding: 2em;
+	border-radius: 8px;
+	text-align: center;
+	transition: transform 0.8s, opacity .6s;
+	overflow: hidden;
+}
+
+.cardFront {
+	background-color: var(--light);
+	color: var(--intensiveBlue);
+	border: 5px solid var(--intensiveBlue);
+}
+
+.cardBack {
+	background-color: var(--lightBlue);
+	color: var(--dark);
+	border: 5px solid var(--dark);
+	transform: rotateY(-180deg);
+	opacity: 0;
+}
+
+.cardFrontClick {
+	transform: rotateY(180deg);
+	opacity: 0;
+}
+
+.cardBackClick {
+	transform: rotateY(0);
+	opacity: 1;
+}
+
+.textFront,
+.textBack {
+	font-size: 3rem;
+}
+
+.buttons {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	padding: 2em;
+}
+
+/* TABLET */
+@media (min-width: 576px) {
+}
+
+/* DESKTOP */
+@media (min-width: 768px) {
+	.cardFront,
+	.cardBack {
+		height: 60vh;
+	}
+
+	.buttons {
+		width: 55%;
+		padding: 0;
+	}
+}
+
+@media (min-width: 992px) {
+	.card {
+		width: 60%;
+	}
+
+	.buttons {
+		width: 40%;
+	}
+}
