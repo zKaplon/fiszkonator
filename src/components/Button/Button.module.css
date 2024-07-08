@@ -22,22 +22,31 @@
 	width: 3em;
 }
 
-.declineBtn, .confirmBtn {
+.declineBtn,
+.confirmBtn {
 	height: 4.5em;
 	width: 4.5em;
-	padding: .2em;
+	padding: 0.2em;
 	background-color: rgb(247, 197, 197);
 	color: rgb(227, 72, 72);
-	border: .2em solid rgb(227, 72, 72);
+	border: 0.2em solid rgb(227, 72, 72);
 	border-radius: 50%;
 }
 
 .confirmBtn {
 	color: rgb(72, 227, 72);
-	border: .2em solid rgb(72, 227, 72);
+	border: 0.2em solid rgb(72, 227, 72);
 	background-color: rgb(220, 249, 215);
 }
 
+.xBtn {
+	position: absolute;
+	margin: 1em;
+	top: 0;
+	right: 0;
+	width: 1.8em;
+	height: 1.8em;
+}
 
 @media (min-width: 576px) {
 	.editBtn,
@@ -50,10 +59,11 @@
 		margin: 2em 0 3em;
 	}
 
-	.declineBtn, .confirmBtn {
+	.declineBtn,
+	.confirmBtn {
 		height: 6em;
 		width: 6em;
-		padding: .4em;
+		padding: 0.4em;
 	}
 }
 

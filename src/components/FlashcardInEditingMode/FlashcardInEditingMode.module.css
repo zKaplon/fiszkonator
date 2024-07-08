@@ -1,0 +1,73 @@
+.flashcardInEditingMode {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 2em;
+	position: relative;
+	align-items: center;
+	width: 100%;
+	margin: 2em 0;
+	padding: 4em 2em 2em 2em;
+	border: 2px solid var(--mediumBlue);
+	border-radius: 8px;
+}
+
+.conceptContainer,
+.definitionContainer {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.conceptContainer label,
+.definitionContainer label {
+	margin: 0.2em 1em 0;
+	font-size: 1.6rem;
+	color: var(--intensiveBlue);
+}
+
+.conceptContainer input,
+.definitionContainer input {
+	padding: 0.2em;
+	font-size: 1.6rem;
+	background: transparent;
+	border: none;
+	border-bottom: 1px solid var(--intensiveBlue);
+}
+
+.conceptContainer input:focus,
+.definitionContainer input:focus {
+	border-bottom: 3px solid var(--intensiveBlue);
+	outline: none;
+}
+
+.conceptContainer input:focus + label,
+.definitionContainer input:focus + label {
+	color: var(--intensiveBlue);
+	font-weight: bold;
+}
+
+@media (min-width: 576px) {
+	.flashcardInEditingMode {
+		flex-direction: row;
+	}
+}
+
+@media (min-width: 992px) {
+	.flashcardInEditingMode {
+		gap: 4em;
+		margin: 4em 0;
+		padding: 3em;
+	}
+
+	.conceptContainer label,
+	.definitionContainer label {
+		font-size: 2rem;
+	}
+
+	.conceptContainer input,
+	.definitionContainer input {
+		padding: 0.6em;
+		font-size: 1.8rem;
+	}
+}

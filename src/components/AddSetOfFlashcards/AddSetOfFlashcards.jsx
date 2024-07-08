@@ -1,13 +1,39 @@
 import styles from "./AddSetOfFlashcards.module.css";
 import { Button } from "../Button/Button.jsx";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
+import { FlashcardInEditingMode } from "../FlashcardInEditingMode/FlashcardInEditingMode.jsx";
+import { useState } from "react";
 
-export function AddSetOfFlashcards() {
+export function AddSetOfFlashcards({ onAddBtnClick, onCancelBtnClick }) {
+	// const [numberOfFlashcards, setNumberOfFlashcards] = useState(1)
+
+	const flashcardsInEditingModeBase = [
+		{ concept: "aaa", definition: "aaa", id: 0 },
+		{ concept: "bbb", definition: "bbb", id: 1 },
+	];
+	const [flashcardsInEditingMode, setFlashcardsInEditingMode] = useState(
+		flashcardsInEditingModeBase
+	);
+
+	const increaseNumberOfFlashcardsInEditingMode = () => {
+		setFlashcardsInEditingMode((prevBase) => [
+			...prevBase,
+			{
+				concept: "",
+				definition: "",
+				id: prevBase.length > 0 ? prevBase.at(-1).id + 1 : 0,
+			},
+		]);
+	};
+
 	return (
-		<div className={styles.container}>
+		<div className={styles.editModeContainer}>
+			{/* title */}
 			<div className={styles.wrapper}>
 				<h2 className={styles.addingSetTitle}>Dodawanie zestawu:</h2>
 			</div>
+
+			{/* info about set */}
 			<div className={styles.oneInfo}>
 				<label htmlFor="nameOfSet" className={styles.label}>
 					NAZWA ZESTAWU:
@@ -21,27 +47,30 @@ export function AddSetOfFlashcards() {
 				<textarea id="descriptionOfSet" className={styles.textarea}></textarea>
 			</div>
 
-			{/* dodawanie fiszek */}
+			{/* flashcards in editing mode */}
 			<p className={styles.addingConceptsTitle}>FISZKI:</p>
-			<div className={styles.addingConcepts}>
-				<div className={styles.conceptContainer}>
-					<input type="text" id="concept" />
-					<label htmlFor="concept">POJĘCIE</label>
-				</div>
 
-				<div className={styles.definitionContainer}>
-					<input type="text" id="definition" />
-					<label htmlFor="definition">DEFINICJA</label>
-				</div>
-			</div>
-
+			{flashcardsInEditingMode.map((element) => {
+				return (
+					<FlashcardInEditingMode key={element.id}></FlashcardInEditingMode>
+				);
+			})}
 			<div className={styles.wrapper}>
-				<Button icon={faCirclePlus} btnClass={`${"addBtn"}`}></Button>
+				<Button
+					icon={faCirclePlus}
+					btnClass={`${"addBtn"}`}
+					onClick={increaseNumberOfFlashcardsInEditingMode}
+				></Button>
 			</div>
 
+			{/* save, cancel btns */}
 			<div className={styles.buttons}>
-				<button className={styles.saveBtn}>Zapisz</button>
-				<button className={styles.cancelBtn}>Anuluj</button>
+				<button className={styles.saveBtn} onClick={onAddBtnClick}>
+					Zapisz
+				</button>
+				<button className={styles.cancelBtn} onClick={onCancelBtnClick}>
+					Anuluj
+				</button>
 			</div>
 		</div>
 	);

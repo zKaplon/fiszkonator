@@ -6,9 +6,9 @@ const flashcards = [
 ]
 let cardListIncrement = 0
 
-export function SetOfFlashcardsList() {
+export function SetOfFlashcardsList({onEditBtnClick}) {
 	return flashcards.map(card => {
 		cardListIncrement++
-		return <SetOfFlashcards key={cardListIncrement} title={card.title} description={card.description}></SetOfFlashcards>
+		return <SetOfFlashcards key={cardListIncrement} title={card.title} description={card.description} onEditBtnClick={onEditBtnClick}></SetOfFlashcards>
 	})
 }
