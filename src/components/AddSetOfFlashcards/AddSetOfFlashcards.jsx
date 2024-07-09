@@ -34,7 +34,7 @@ export function AddSetOfFlashcards({ onSaveBtnClick, onCancelBtnClick }) {
 		const description = document.querySelector("#descriptionOfSet").value;
 		const flashcards = flashcardsInEditingMode;
 
-		onSaveBtnClick(title, description, flashcards);
+		title != "" ? onSaveBtnClick(title, description, flashcards) : document.querySelector('#errorInfo').textContent = 'podaj nazwę zestawu!!!' ;
 	};
 
 	return (
@@ -50,6 +50,7 @@ export function AddSetOfFlashcards({ onSaveBtnClick, onCancelBtnClick }) {
 					NAZWA ZESTAWU:
 				</label>
 				<input type="text" id="nameOfSet" className={styles.input} />
+				<p className={styles.errorInfo} id="errorInfo"></p>
 			</div>
 			<div className={styles.oneInfo}>
 				<label htmlFor="descriptionOfSet" className={styles.label}>

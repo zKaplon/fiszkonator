@@ -27,6 +27,13 @@
 	margin-left: 1em;
 }
 
+.errorInfo {
+	margin: 0.5em 1em;
+	color: red;
+	font-size: 1.4em;
+	text-transform: uppercase;
+}
+
 .input,
 .textarea {
 	margin-top: 0.8em;
