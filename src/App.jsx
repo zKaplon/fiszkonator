@@ -6,16 +6,10 @@ import { AddSetOfFlashcards } from "./components/AddSetOfFlashcards/AddSetOfFlas
 import { useState } from "react";
 
 function App() {
-	const setsBase = [
-		{
-			title: "set1",
-			description: "opis1",
-			flashcards: [{ concept: "c1", definition: "d1", id: 0 }],
-			id: 0,
-		},
-	];
+	const setsBase = [];
 	const [sets, setSets] = useState(setsBase);
 	const [isEditingModeShown, setIsEditingModeShown] = useState(false);
+	const [editingSet, setEditingSet] = useState(null);
 
 	const addNewSet = (title, description, flashcards) => {
 		setSets((prevBase) => {
@@ -29,6 +23,26 @@ function App() {
 			console.log(updatedBase);
 			return updatedBase;
 		});
+		changeVisibilityOfEditingMode();
+	};
+
+	const editSet = (setId) => {
+		const setToEdit = sets.find((set) => set.id === setId);
+		setEditingSet(setToEdit);
+		changeVisibilityOfEditingMode();
+	};
+
+	const saveEditedSet = (title, description, flashcards) => {
+		setSets((prevBase) => {
+			const updatedBase = prevBase.map((set) =>
+				set.id === editingSet.id
+					? { ...set, title, description, flashcards }
+					: set
+			);
+			console.log(updatedBase);
+			return updatedBase;
+		});
+		setEditingSet(null);
 		changeVisibilityOfEditingMode();
 	};
 
@@ -46,12 +60,13 @@ function App() {
 				<main className={styles.setsOfFlashcardsContainer}>
 					{isEditingModeShown ? (
 						<AddSetOfFlashcards
-							onSaveBtnClick={addNewSet}
+							onSaveBtnClick={editingSet ? saveEditedSet : addNewSet}
 							onCancelBtnClick={changeVisibilityOfEditingMode}
+							existingSet={editingSet}
 						></AddSetOfFlashcards>
 					) : (
 						<SetOfFlashcardsList
-							onEditBtnClick={changeVisibilityOfEditingMode}
+							onEditBtnClick={(setId) => editSet(setId)}
 							base={sets}
 						></SetOfFlashcardsList>
 					)}

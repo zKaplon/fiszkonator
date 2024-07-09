@@ -2,10 +2,33 @@ import styles from "./AddSetOfFlashcards.module.css";
 import { Button } from "../Button/Button.jsx";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { FlashcardInEditingMode } from "../FlashcardInEditingMode/FlashcardInEditingMode.jsx";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export function AddSetOfFlashcards({ onSaveBtnClick, onCancelBtnClick }) {
+export function AddSetOfFlashcards({
+	onSaveBtnClick,
+	onCancelBtnClick,
+	existingSet,
+}) {
+	const [title, setTitle] = useState("");
+	const [description, setDescription] = useState("");
 	const [flashcardsInEditingMode, setFlashcardsInEditingMode] = useState([]);
+	const [error, setError] = useState("");
+
+	useEffect(() => {
+		if (existingSet) {
+			setTitle(existingSet.title);
+			setDescription(existingSet.description);
+			setFlashcardsInEditingMode(existingSet.flashcards);
+		}
+	}, [existingSet]);
+
+	const saveSet = () => {
+		if (title !== "") {
+			onSaveBtnClick(title, description, flashcardsInEditingMode);
+		} else {
+			setError("Podaj nazwę zestawu!!!");
+		}
+	};
 
 	const updateFlashcard = (id, concept, definition) => {
 		setFlashcardsInEditingMode((prevBase) => {
@@ -29,14 +52,6 @@ export function AddSetOfFlashcards({ onSaveBtnClick, onCancelBtnClick }) {
 		});
 	};
 
-	const addSet = () => {
-		const title = document.querySelector("#nameOfSet").value;
-		const description = document.querySelector("#descriptionOfSet").value;
-		const flashcards = flashcardsInEditingMode;
-
-		title != "" ? onSaveBtnClick(title, description, flashcards) : document.querySelector('#errorInfo').textContent = 'podaj nazwę zestawu!!!' ;
-	};
-
 	return (
 		<div className={styles.editModeContainer}>
 			{/* title */}
@@ -49,14 +64,27 @@ export function AddSetOfFlashcards({ onSaveBtnClick, onCancelBtnClick }) {
 				<label htmlFor="nameOfSet" className={styles.label}>
 					NAZWA ZESTAWU:
 				</label>
-				<input type="text" id="nameOfSet" className={styles.input} />
-				<p className={styles.errorInfo} id="errorInfo"></p>
+				<input
+					type="text"
+					id="nameOfSet"
+					className={styles.input}
+					value={title}
+					onChange={(e) => setTitle(e.target.value)}
+				/>
+				<p className={styles.errorInfo} id="errorInfo">
+					{error}
+				</p>
 			</div>
 			<div className={styles.oneInfo}>
 				<label htmlFor="descriptionOfSet" className={styles.label}>
 					OPIS:
 				</label>
-				<textarea id="descriptionOfSet" className={styles.textarea}></textarea>
+				<textarea
+					id="descriptionOfSet"
+					className={styles.textarea}
+					value={description}
+					onChange={(e) => setDescription(e.target.value)}
+				></textarea>
 			</div>
 
 			{/* flashcards in editing mode */}
@@ -82,7 +110,7 @@ export function AddSetOfFlashcards({ onSaveBtnClick, onCancelBtnClick }) {
 
 			{/* save, cancel btns */}
 			<div className={styles.buttons}>
-				<button className={styles.saveBtn} onClick={addSet}>
+				<button className={styles.saveBtn} onClick={saveSet}>
 					Zapisz
 				</button>
 				<button className={styles.cancelBtn} onClick={onCancelBtnClick}>
