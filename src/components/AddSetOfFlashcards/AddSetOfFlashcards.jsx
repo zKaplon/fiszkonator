@@ -4,26 +4,37 @@ import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { FlashcardInEditingMode } from "../FlashcardInEditingMode/FlashcardInEditingMode.jsx";
 import { useState } from "react";
 
-export function AddSetOfFlashcards({ onAddBtnClick, onCancelBtnClick }) {
-	// const [numberOfFlashcards, setNumberOfFlashcards] = useState(1)
+export function AddSetOfFlashcards({ onSaveBtnClick, onCancelBtnClick }) {
+	const [flashcardsInEditingMode, setFlashcardsInEditingMode] = useState([]);
 
-	const flashcardsInEditingModeBase = [
-		{ concept: "aaa", definition: "aaa", id: 0 },
-		{ concept: "bbb", definition: "bbb", id: 1 },
-	];
-	const [flashcardsInEditingMode, setFlashcardsInEditingMode] = useState(
-		flashcardsInEditingModeBase
-	);
+	const updateFlashcard = (id, concept, definition) => {
+		setFlashcardsInEditingMode((prevBase) => {
+			const updatedBase = prevBase.map((flashcard) =>
+				flashcard.id === id ? { ...flashcard, concept, definition } : flashcard
+			);
+			return updatedBase;
+		});
+	};
 
 	const increaseNumberOfFlashcardsInEditingMode = () => {
-		setFlashcardsInEditingMode((prevBase) => [
-			...prevBase,
-			{
+		setFlashcardsInEditingMode((prevBase) => {
+			const newFlashcard = {
 				concept: "",
 				definition: "",
 				id: prevBase.length > 0 ? prevBase.at(-1).id + 1 : 0,
-			},
-		]);
+			};
+			const updatedBase = [...prevBase, newFlashcard];
+			console.log(updatedBase);
+			return updatedBase;
+		});
+	};
+
+	const addSet = () => {
+		const title = document.querySelector("#nameOfSet").value;
+		const description = document.querySelector("#descriptionOfSet").value;
+		const flashcards = flashcardsInEditingMode;
+
+		onSaveBtnClick(title, description, flashcards);
 	};
 
 	return (
@@ -50,11 +61,16 @@ export function AddSetOfFlashcards({ onAddBtnClick, onCancelBtnClick }) {
 			{/* flashcards in editing mode */}
 			<p className={styles.addingConceptsTitle}>FISZKI:</p>
 
-			{flashcardsInEditingMode.map((element) => {
-				return (
-					<FlashcardInEditingMode key={element.id}></FlashcardInEditingMode>
-				);
-			})}
+			{flashcardsInEditingMode.map((element) => (
+				<FlashcardInEditingMode
+					key={element.id}
+					id={element.id}
+					cValue={element.concept}
+					dValue={element.definition}
+					onUpdate={updateFlashcard}
+				/>
+			))}
+
 			<div className={styles.wrapper}>
 				<Button
 					icon={faCirclePlus}
@@ -65,7 +81,7 @@ export function AddSetOfFlashcards({ onAddBtnClick, onCancelBtnClick }) {
 
 			{/* save, cancel btns */}
 			<div className={styles.buttons}>
-				<button className={styles.saveBtn} onClick={onAddBtnClick}>
+				<button className={styles.saveBtn} onClick={addSet}>
 					Zapisz
 				</button>
 				<button className={styles.cancelBtn} onClick={onCancelBtnClick}>
