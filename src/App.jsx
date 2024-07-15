@@ -65,9 +65,13 @@ function App() {
 	return (
 		<>
 			<div className={styles.background}>
-				<header className={styles.titleBackground}>
-					<h1 className={styles.siteTitle}>FISZKONATOR</h1>
-				</header>
+				{!isEditingModeShown && !isLearningModeShown ? (
+					<header className={styles.titleBackground}>
+						<h1 className={styles.siteTitle}>FISZKONATOR</h1>
+					</header>
+				) : (
+					""
+				)}
 
 				<main className={styles.setsOfFlashcardsContainer}>
 					{isLearningModeShown ? (

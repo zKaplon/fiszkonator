@@ -1,5 +1,6 @@
 .setCard {
-	max-width: 250px;
+	/* max-width: 250px; */
+	min-width: 70%;
 	margin-bottom: 2em;
 	padding: 1em;
 	background-color: var(--light);

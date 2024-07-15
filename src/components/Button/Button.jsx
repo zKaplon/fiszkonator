@@ -22,6 +22,12 @@ export function Button({ icon, btnClass, onClick }) {
 	if (btnClass === "xBtn") {
 		btnType = styles.xBtn;
 	}
+	if (btnClass === "exitBtn") {
+		btnType = styles.exitBtn;
+	}
+	if (btnClass === "undoBtn") {
+		btnType = styles.undoBtn;
+	}
 
 	return (
 		<button className={`${styles.btnReset} ${btnType}`} onClick={onClick}>

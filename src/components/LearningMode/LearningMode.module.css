@@ -1,3 +1,28 @@
+.header {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-around;
+	min-height: 10vh;
+	width: 100%;
+	padding: 2em 0;
+	color: var(--light);
+	/* background-color: red; */
+
+	border-bottom: 2px solid var(--light);
+}
+
+.setTitle {
+	max-width: 50%;
+	font-size: 3rem;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+.counter {
+	font-size: 2rem;
+}
+
 .card {
 	display: flex;
 	justify-content: center;
@@ -5,9 +30,9 @@
 	position: relative;
 	height: 60vh;
 	width: 100%;
+	margin: 3em 0;
 	cursor: pointer;
 	perspective: 1000px;
-
 }
 
 .cardFront,
@@ -23,20 +48,24 @@
 	padding: 2em;
 	border-radius: 8px;
 	text-align: center;
-	transition: transform 0.8s, opacity .6s;
+	transition: transform 0.8s, opacity 0.6s;
 	overflow: hidden;
-}
 
-.cardFront {
 	background-color: var(--light);
 	color: var(--intensiveBlue);
 	border: 5px solid var(--intensiveBlue);
 }
 
+.cardFront {
+	/* background-color: var(--light);
+	color: var(--intensiveBlue);
+	border: 5px solid var(--intensiveBlue); */
+}
+
 .cardBack {
-	background-color: var(--lightBlue);
+	/* background-color: var(--lightBlue);
 	color: var(--dark);
-	border: 5px solid var(--dark);
+	border: 5px solid var(--dark); */
 	transform: rotateY(-180deg);
 	opacity: 0;
 }
@@ -54,6 +83,16 @@
 .textFront,
 .textBack {
 	font-size: 3rem;
+}
+
+.rotateText {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	padding: 1em;
+	color: var(--mediumBlue);
+	font-size: 1.4rem;
+	text-transform: uppercase;
 }
 
 .buttons {
