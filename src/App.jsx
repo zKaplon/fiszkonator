@@ -11,6 +11,7 @@ function App() {
 	const [isEditingModeShown, setIsEditingModeShown] = useState(false);
 	const [editingSet, setEditingSet] = useState(null);
 	const [isLearningModeShown, setIsLearningModeShown] = useState(false);
+	const [selectedSet, setSelectedSet] = useState(null)
 
 	const changeVisibilityOfEditingMode = () => {
 		setIsEditingModeShown((prevValue) => !prevValue);
@@ -40,6 +41,12 @@ function App() {
 		setEditingSet(setToEdit);
 		changeVisibilityOfEditingMode();
 	};
+
+	const selectSetToLearn = (setId) => {
+		const selectedSet = sets.find((set) => set.id === setId)
+		setSelectedSet(selectedSet)
+		console.log('selected set:' + selectedSet);
+	}
 
 	const saveEditedSet = (title, description, flashcards) => {
 		setSets((prevBase) => {
@@ -75,7 +82,10 @@ function App() {
 
 				<main className={styles.setsOfFlashcardsContainer}>
 					{isLearningModeShown ? (
-						<LearningMode></LearningMode>
+						<LearningMode
+							onExitBtnClick={changeVisibilityOfLearningMode}
+							set = {selectedSet}
+						></LearningMode>
 					) : isEditingModeShown ? (
 						<EditSetOfFlashcards
 							onSaveBtnClick={editingSet ? saveEditedSet : addNewSet}
@@ -86,7 +96,8 @@ function App() {
 						<SetOfFlashcardsList
 							onEditBtnClick={(setId) => editSet(setId)}
 							onDeleteBtnClick={(setId) => deleteSet(setId)}
-							onSetClick={() => {
+							onSetClick={(setId) => {
+								selectSetToLearn(setId);
 								changeVisibilityOfLearningMode();
 							}}
 							base={sets}
