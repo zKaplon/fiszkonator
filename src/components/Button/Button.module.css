@@ -16,10 +16,19 @@
 	cursor: pointer;
 }
 
+.addBtn:hover {
+	color: var(--darkBlue);
+}
+
 .editBtn,
 .deleteBtn {
 	padding: 0.8em;
 	width: 3em;
+}
+
+.editBtn:hover,
+.deleteBtn:hover {
+	color: var(--darkBlue);
 }
 
 .declineBtn,
@@ -51,7 +60,7 @@
 .exitBtn {
 	height: 2.4em;
 	width: 2.4em;
-	padding: .3em;
+	padding: 0.3em;
 	color: var(--light);
 	border: 3px solid var(--light);
 	border-radius: 8px;

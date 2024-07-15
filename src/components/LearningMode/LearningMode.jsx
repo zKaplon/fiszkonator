@@ -10,16 +10,25 @@ import { useState } from "react";
 
 export const LearningMode = ({ onExitBtnClick, set }) => {
 	const [currentIndex, setCurrentIndex] = useState(0);
+	const [animationClass, setAnimationClass] = useState("");
 
-	const handleNextCard = () => {
+	const handleNextCard = (direction) => {
 		if (currentIndex < set.flashcards.length - 1) {
-			setCurrentIndex(currentIndex + 1);
+			setAnimationClass(direction === "right" ? styles.cardSlideRight : styles.cardSlideLeft);
+			setTimeout(() => {
+				setCurrentIndex(currentIndex + 1);
+				setAnimationClass("");
+			}, 500); // Czas trwania animacji
 		}
 	};
 
 	const handlePreviousCard = () => {
 		if (currentIndex > 0) {
-			setCurrentIndex(currentIndex - 1);
+			setAnimationClass(styles.cardSlideTopIn);
+			setTimeout(() => {
+				setCurrentIndex(currentIndex - 1);
+				setAnimationClass("");
+			}, 500); // Czas trwania animacji
 		}
 	};
 
@@ -27,13 +36,17 @@ export const LearningMode = ({ onExitBtnClick, set }) => {
 		<>
 			<div className={styles.header}>
 				<p className={styles.setTitle}>{set.title}</p>
-				<p className={styles.counter}>
-					{currentIndex + 1}/{set.flashcards.length}
-				</p>
+				{set.flashcards[0] ? (
+					<p className={styles.counter}>
+						{currentIndex + 1}/{set.flashcards.length}
+					</p>
+				) : (
+					""
+				)}
 				<Button icon={faX} btnClass="exitBtn" onClick={onExitBtnClick}></Button>
 			</div>
 			<div
-				className={styles.card}
+				className={`${styles.card} ${animationClass}`}
 				onClick={(e) => {
 					const card = e.currentTarget;
 					const front = card.querySelector(`.${styles.cardFront}`);
@@ -67,7 +80,7 @@ export const LearningMode = ({ onExitBtnClick, set }) => {
 					<Button
 						icon={faXmark}
 						btnClass="declineBtn"
-						onClick={handleNextCard}
+						onClick={() => handleNextCard("left")}
 					></Button>
 					<Button
 						icon={faArrowRotateLeft}
@@ -77,7 +90,7 @@ export const LearningMode = ({ onExitBtnClick, set }) => {
 					<Button
 						icon={faCheck}
 						btnClass="confirmBtn"
-						onClick={handleNextCard}
+						onClick={() => handleNextCard("right")}
 					></Button>
 				</div>
 			) : (

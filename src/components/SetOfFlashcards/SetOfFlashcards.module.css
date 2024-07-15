@@ -1,11 +1,12 @@
 .setCard {
+	min-width: 90%;
 	/* max-width: 250px; */
-	min-width: 70%;
 	margin-bottom: 2em;
 	padding: 1em;
 	background-color: var(--light);
 	border: 1px solid var(--intensiveBlue);
 	border-radius: 8px;
+	cursor: pointer;
 }
 
 .setTitle {
@@ -36,6 +37,7 @@
 /* TABLET */
 @media (min-width: 576px) {
 	.setCard {
+		min-width: 350px;
 		max-width: 350px;
 		padding: 2em;
 	}
