@@ -3,7 +3,13 @@ import { Button } from "../Button/Button";
 import styles from "./FlashcardInEditingMode.module.css";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 
-export function FlashcardInEditingMode({ id, cValue, dValue, onUpdate }) {
+export function FlashcardInEditingMode({
+	id,
+	cValue,
+	dValue,
+	onUpdate,
+	onDelete,
+}) {
 	const [conceptValue, setConceptValue] = useState(cValue);
 	const [definitionValue, setDefinitionValue] = useState(dValue);
 
@@ -15,6 +21,10 @@ export function FlashcardInEditingMode({ id, cValue, dValue, onUpdate }) {
 	const handleDefinitionChange = (e) => {
 		setDefinitionValue(e.target.value);
 		onUpdate(id, conceptValue, e.target.value);
+	};
+
+	const handleDelete = () => {
+		onDelete(id);
 	};
 
 	return (
@@ -39,7 +49,7 @@ export function FlashcardInEditingMode({ id, cValue, dValue, onUpdate }) {
 				<label htmlFor="definition">DEFINICJA</label>
 			</div>
 
-			<Button icon={faX} btnClass="xBtn"></Button>
+			<Button icon={faX} btnClass="xBtn" onClick={handleDelete}></Button>
 		</div>
 	);
 }

@@ -2,7 +2,7 @@ import styles from "./App.module.css";
 import { Button } from "./components/Button/Button";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { SetOfFlashcardsList } from "./components/SetOfFlashcardsList/SetOfFlashcardsList";
-import { AddSetOfFlashcards } from "./components/AddSetOfFlashcards/AddSetOfFlashcards";
+import { EditSetOfFlashcards } from "./components/EditSetOfFlashcards/EditSetOfFlashcards";
 import { useState } from "react";
 
 function App() {
@@ -59,11 +59,11 @@ function App() {
 
 				<main className={styles.setsOfFlashcardsContainer}>
 					{isEditingModeShown ? (
-						<AddSetOfFlashcards
+						<EditSetOfFlashcards
 							onSaveBtnClick={editingSet ? saveEditedSet : addNewSet}
 							onCancelBtnClick={changeVisibilityOfEditingMode}
 							existingSet={editingSet}
-						></AddSetOfFlashcards>
+						></EditSetOfFlashcards>
 					) : (
 						<SetOfFlashcardsList
 							onEditBtnClick={(setId) => editSet(setId)}

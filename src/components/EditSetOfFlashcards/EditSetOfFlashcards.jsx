@@ -1,10 +1,10 @@
-import styles from "./AddSetOfFlashcards.module.css";
+import styles from "./EditSetOfFlashcards.module.css";
 import { Button } from "../Button/Button.jsx";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { FlashcardInEditingMode } from "../FlashcardInEditingMode/FlashcardInEditingMode.jsx";
 import { useState, useEffect } from "react";
 
-export function AddSetOfFlashcards({
+export function EditSetOfFlashcards({
 	onSaveBtnClick,
 	onCancelBtnClick,
 	existingSet,
@@ -48,6 +48,13 @@ export function AddSetOfFlashcards({
 			};
 			const updatedBase = [...prevBase, newFlashcard];
 			console.log(updatedBase);
+			return updatedBase;
+		});
+	};
+
+	const deleteFlashcard = (id) => {
+		setFlashcardsInEditingMode((prevBase) => {
+			const updatedBase = prevBase.filter((flashcard) => flashcard.id !== id);
 			return updatedBase;
 		});
 	};
@@ -97,6 +104,7 @@ export function AddSetOfFlashcards({
 					cValue={element.concept}
 					dValue={element.definition}
 					onUpdate={updateFlashcard}
+					onDelete={deleteFlashcard}
 				/>
 			))}
 
