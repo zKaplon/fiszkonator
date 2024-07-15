@@ -3,7 +3,12 @@ import { Button } from "../Button/Button";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 
-export const SetOfFlashcards = ({ title, description, onEditBtnClick}) => {
+export const SetOfFlashcards = ({
+	title,
+	description,
+	onEditBtnClick,
+	onDeleteBtnClick,
+}) => {
 	return (
 		<div className={styles.setCard}>
 			<h2 className={styles.setTitle}>{title}</h2>
@@ -14,7 +19,11 @@ export const SetOfFlashcards = ({ title, description, onEditBtnClick}) => {
 					btnClass="editBtn"
 					onClick={onEditBtnClick}
 				></Button>
-				<Button icon={faTrash} btnClass="deleteBtn"></Button>
+				<Button
+					icon={faTrash}
+					btnClass="deleteBtn"
+					onClick={onDeleteBtnClick}
+				></Button>
 			</div>
 		</div>
 	);

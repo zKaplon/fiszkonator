@@ -2,7 +2,7 @@ import { SetOfFlashcards } from "../SetOfFlashcards/SetOfFlashcards";
 
 let cardListIncrement = 0;
 
-export function SetOfFlashcardsList({ onEditBtnClick, base }) {
+export function SetOfFlashcardsList({ onEditBtnClick, onDeleteBtnClick, base }) {
 	return base.map((card) => {
 		cardListIncrement++;
 		return (
@@ -13,6 +13,7 @@ export function SetOfFlashcardsList({ onEditBtnClick, base }) {
 				onEditBtnClick={() =>
 					onEditBtnClick(card.id)
 				}
+				onDeleteBtnClick = {()=> {onDeleteBtnClick(card.id)}}
 			></SetOfFlashcards>
 		);
 	});

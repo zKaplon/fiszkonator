@@ -46,6 +46,13 @@ function App() {
 		changeVisibilityOfEditingMode();
 	};
 
+	const deleteSet = (setId) => {
+		setSets((prevBase) => {
+			const updatedBase = prevBase.filter((set) => set.id !== setId);
+			return updatedBase;
+		});
+	};
+
 	const changeVisibilityOfEditingMode = () => {
 		setIsEditingModeShown((prevValue) => !prevValue);
 	};
@@ -67,6 +74,7 @@ function App() {
 					) : (
 						<SetOfFlashcardsList
 							onEditBtnClick={(setId) => editSet(setId)}
+							onDeleteBtnClick={(setId) => deleteSet(setId)}
 							base={sets}
 						></SetOfFlashcardsList>
 					)}
