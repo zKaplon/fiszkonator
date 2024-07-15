@@ -1,8 +1,8 @@
-import styles from "./Flashcards.module.css";
+import styles from "./LearningMode.module.css";
 import { Button } from "../Button/Button.jsx";
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 
-export const Flashcards = () => {
+export const LearningMode = () => {
 	return (
 		<>
 			<div

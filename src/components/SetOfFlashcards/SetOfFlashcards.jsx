@@ -8,21 +8,28 @@ export const SetOfFlashcards = ({
 	description,
 	onEditBtnClick,
 	onDeleteBtnClick,
+	onSetClick,
 }) => {
 	return (
-		<div className={styles.setCard}>
+		<div className={styles.setCard} onClick={onSetClick}>
 			<h2 className={styles.setTitle}>{title}</h2>
 			<p className={styles.setDescription}>{description}</p>
 			<div className={styles.icons}>
 				<Button
 					icon={faPenToSquare}
 					btnClass="editBtn"
-					onClick={onEditBtnClick}
+					onClick={(e) => {
+						e.stopPropagation();
+						onEditBtnClick();
+					}}
 				></Button>
 				<Button
 					icon={faTrash}
 					btnClass="deleteBtn"
-					onClick={onDeleteBtnClick}
+					onClick={(e) => {
+						e.stopPropagation();
+						onDeleteBtnClick();
+					}}
 				></Button>
 			</div>
 		</div>

@@ -4,12 +4,21 @@ import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { SetOfFlashcardsList } from "./components/SetOfFlashcardsList/SetOfFlashcardsList";
 import { EditSetOfFlashcards } from "./components/EditSetOfFlashcards/EditSetOfFlashcards";
 import { useState } from "react";
+import { LearningMode } from "./components/LearningMode/LearningMode";
 
 function App() {
-	const setsBase = [];
-	const [sets, setSets] = useState(setsBase);
+	const [sets, setSets] = useState([]);
 	const [isEditingModeShown, setIsEditingModeShown] = useState(false);
 	const [editingSet, setEditingSet] = useState(null);
+	const [isLearningModeShown, setIsLearningModeShown] = useState(false);
+
+	const changeVisibilityOfEditingMode = () => {
+		setIsEditingModeShown((prevValue) => !prevValue);
+	};
+
+	const changeVisibilityOfLearningMode = () => {
+		setIsLearningModeShown((prevValue) => !prevValue);
+	};
 
 	const addNewSet = (title, description, flashcards) => {
 		setSets((prevBase) => {
@@ -42,8 +51,8 @@ function App() {
 			console.log(updatedBase);
 			return updatedBase;
 		});
-		setEditingSet(null);
 		changeVisibilityOfEditingMode();
+		setEditingSet(null);
 	};
 
 	const deleteSet = (setId) => {
@@ -51,10 +60,6 @@ function App() {
 			const updatedBase = prevBase.filter((set) => set.id !== setId);
 			return updatedBase;
 		});
-	};
-
-	const changeVisibilityOfEditingMode = () => {
-		setIsEditingModeShown((prevValue) => !prevValue);
 	};
 
 	return (
@@ -65,7 +70,9 @@ function App() {
 				</header>
 
 				<main className={styles.setsOfFlashcardsContainer}>
-					{isEditingModeShown ? (
+					{isLearningModeShown ? (
+						<LearningMode></LearningMode>
+					) : isEditingModeShown ? (
 						<EditSetOfFlashcards
 							onSaveBtnClick={editingSet ? saveEditedSet : addNewSet}
 							onCancelBtnClick={changeVisibilityOfEditingMode}
@@ -75,19 +82,22 @@ function App() {
 						<SetOfFlashcardsList
 							onEditBtnClick={(setId) => editSet(setId)}
 							onDeleteBtnClick={(setId) => deleteSet(setId)}
+							onSetClick={() => {
+								changeVisibilityOfLearningMode();
+							}}
 							base={sets}
 						></SetOfFlashcardsList>
 					)}
 				</main>
 
-				{isEditingModeShown ? (
-					""
-				) : (
+				{!isEditingModeShown && !isLearningModeShown ? (
 					<Button
 						icon={faCirclePlus}
 						btnClass={`${"addBtn"}`}
 						onClick={changeVisibilityOfEditingMode}
 					></Button>
+				) : (
+					" "
 				)}
 			</div>
 		</>
