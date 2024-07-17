@@ -5,13 +5,14 @@ import { SetOfFlashcardsList } from "./components/SetOfFlashcardsList/SetOfFlash
 import { EditSetOfFlashcards } from "./components/EditSetOfFlashcards/EditSetOfFlashcards";
 import { useState } from "react";
 import { LearningMode } from "./components/LearningMode/LearningMode";
+import { DeletingSetPopup } from "./components/DeletingSetPopup/DeletingSetPopup";
 
 function App() {
 	const [sets, setSets] = useState([]);
 	const [isEditingModeShown, setIsEditingModeShown] = useState(false);
 	const [editingSet, setEditingSet] = useState(null);
 	const [isLearningModeShown, setIsLearningModeShown] = useState(false);
-	const [selectedSet, setSelectedSet] = useState(null)
+	const [selectedSet, setSelectedSet] = useState(null);
 
 	const changeVisibilityOfEditingMode = () => {
 		setIsEditingModeShown((prevValue) => !prevValue);
@@ -43,10 +44,10 @@ function App() {
 	};
 
 	const selectSetToLearn = (setId) => {
-		const selectedSet = sets.find((set) => set.id === setId)
-		setSelectedSet(selectedSet)
-		console.log('selected set:' + selectedSet);
-	}
+		const selectedSet = sets.find((set) => set.id === setId);
+		setSelectedSet(selectedSet);
+		console.log("selected set:" + selectedSet);
+	};
 
 	const saveEditedSet = (title, description, flashcards) => {
 		setSets((prevBase) => {
@@ -84,7 +85,7 @@ function App() {
 					{isLearningModeShown ? (
 						<LearningMode
 							onExitBtnClick={changeVisibilityOfLearningMode}
-							set = {selectedSet}
+							set={selectedSet}
 						></LearningMode>
 					) : isEditingModeShown ? (
 						<EditSetOfFlashcards
@@ -115,6 +116,7 @@ function App() {
 					" "
 				)}
 			</div>
+			<DeletingSetPopup></DeletingSetPopup>
 		</>
 	);
 }

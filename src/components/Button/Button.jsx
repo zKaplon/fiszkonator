@@ -1,7 +1,7 @@
 import { Icon } from "../Icon/Icon";
 import styles from "./Button.module.css";
 
-export function Button({ icon, btnClass, onClick }) {
+export function Button({ icon, btnClass, onClick, text }) {
 	let btnType;
 
 	if (btnClass === "addBtn") {
@@ -28,10 +28,21 @@ export function Button({ icon, btnClass, onClick }) {
 	if (btnClass === "undoBtn") {
 		btnType = styles.undoBtn;
 	}
+	if (btnClass === "repeatWrongBtn") {
+		btnType = styles.repeatWrongBtn;
+	}
+	if (btnClass === "repeatBtn") {
+		btnType = styles.repeatBtn;
+	}
+	if (btnClass === "houseBtn") {
+		btnType = styles.houseBtn;
+	}
+
 
 	return (
-		<button className={`${styles.btnReset} ${btnType}`} onClick={onClick}>
+		<button className={`${styles.btnReset} ${btnType}`} onClick={onClick}> 
 			<Icon icon={icon}></Icon>
+			<p>{text}</p>
 		</button>
 	);
 }

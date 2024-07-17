@@ -117,20 +117,28 @@ export const LearningMode = ({ onExitBtnClick, set }) => {
 		<>
 			{isEndScreenShown ? (
 				<div className={styles.endScreen}>
-					<p>Gratulacje! To już wszystko, co chcesz teraz zrobić?</p>
-					<Button
-						icon={faExclamationTriangle}
-						btnClass
-						onClick={handleRetryWrong}
-					>
-						Kolejna runda - ucz się tylko złych fiszek
-					</Button>
-					<Button icon={faRepeat} btnClass onClick={handleRepeatAll}>
-						Powtórz tę rundę
-					</Button>
-					<Button icon={faHouse} btnClass onClick={onExitBtnClick}>
-						Wyjdź z trybu nauki
-					</Button>
+					<p className={styles.endScreenText}>Gratulacje! To już wszystko!</p>
+					<p className={styles.endScreenText}>Co chcesz teraz zrobić?</p>
+					<div className={styles.buttonsContainer}>
+						<Button
+							icon={faExclamationTriangle}
+							btnClass="repeatWrongBtn"
+							onClick={handleRetryWrong}
+							text="Kolejna runda - ucz się tylko złych fiszek"
+						></Button>
+						<Button
+							icon={faRepeat}
+							btnClass="repeatBtn"
+							onClick={handleRepeatAll}
+							text="Powtórz tę rundę"
+						></Button>
+						<Button
+							icon={faHouse}
+							btnClass="houseBtn"
+							onClick={onExitBtnClick}
+							text="Wyjdź z trybu nauki"
+						></Button>
+					</div>
 				</div>
 			) : (
 				<>

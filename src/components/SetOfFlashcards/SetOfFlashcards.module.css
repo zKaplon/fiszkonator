@@ -1,5 +1,10 @@
 .setCard {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 	min-width: 90%;
+	min-height: 20vh;
 	/* max-width: 250px; */
 	margin-bottom: 2em;
 	padding: 1em;
@@ -14,11 +19,13 @@
 	text-align: center;
 	text-transform: uppercase;
 	color: var(--intensiveBlue);
+	word-break: break-all;
 }
 
 .setDescription {
 	margin: 1em 0;
 	color: var(--dark);
+	word-break: break-all;
 }
 
 .icons {
@@ -39,6 +46,7 @@
 	.setCard {
 		min-width: 350px;
 		max-width: 350px;
+		min-height: none;
 		padding: 2em;
 	}
 
@@ -49,7 +57,7 @@
 	.setDescription {
 		font-size: 1.4rem;
 	}
-	.icons{
+	.icons {
 		justify-content: flex-end;
 	}
 
@@ -78,5 +86,4 @@
 }
 
 @media (min-width: 992px) {
-
 }
