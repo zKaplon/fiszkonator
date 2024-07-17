@@ -119,6 +119,16 @@ export const LearningMode = ({ onExitBtnClick, set }) => {
 		);
 	};
 
+	const rotateCard = () => {
+		const card = document.querySelector(`.${styles.card}`);
+		const front = card.querySelector(`.${styles.cardFront}`);
+		const back = card.querySelector(`.${styles.cardBack}`);
+		front.classList.toggle(styles.cardFrontClick);
+		back.classList.toggle(styles.cardBackClick);
+
+		console.log("obkrecono karte");
+	};
+
 	useEffect(() => {
 		const handleKeyDown = (event) => {
 			if (!isEndScreenShown) {
@@ -126,6 +136,8 @@ export const LearningMode = ({ onExitBtnClick, set }) => {
 					handleConfirm();
 				} else if (event.key === "ArrowLeft") {
 					handleDecline();
+				} else if (event.keyCode === 32) {
+					rotateCard();
 				}
 			}
 		};
@@ -217,13 +229,7 @@ export const LearningMode = ({ onExitBtnClick, set }) => {
 					</div>
 					<div
 						className={`${styles.card} ${animationClass}`}
-						onClick={(e) => {
-							const card = e.currentTarget;
-							const front = card.querySelector(`.${styles.cardFront}`);
-							const back = card.querySelector(`.${styles.cardBack}`);
-							front.classList.toggle(styles.cardFrontClick);
-							back.classList.toggle(styles.cardBackClick);
-						}}
+						onClick={rotateCard}
 					>
 						{(retryMode ? retryFlashcards : set.flashcards)[0] ? (
 							<>
