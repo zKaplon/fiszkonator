@@ -9,7 +9,7 @@ import {
 	faRepeat,
 	faExclamationTriangle,
 } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export const LearningMode = ({ onExitBtnClick, set }) => {
 	const [currentIndex, setCurrentIndex] = useState(0);
@@ -34,7 +34,13 @@ export const LearningMode = ({ onExitBtnClick, set }) => {
 				setAnimationClass("");
 			}, 500);
 		} else {
-			showEndScreen();
+			setAnimationClass(
+				direction === "right" ? styles.cardSlideRight : styles.cardSlideLeft
+			);
+			setTimeout(() => {
+				setAnimationClass("");
+			}, 500);
+			setTimeout(showEndScreen, 500);
 		}
 	};
 
@@ -112,6 +118,57 @@ export const LearningMode = ({ onExitBtnClick, set }) => {
 			"negatywne: " + unknownFlashcards + " pozytywne: " + knownFlashcards
 		);
 	};
+
+	useEffect(() => {
+		const handleKeyDown = (event) => {
+			if (!isEndScreenShown) {
+				if (event.key === "ArrowRight") {
+					handleConfirm();
+				} else if (event.key === "ArrowLeft") {
+					handleDecline();
+				}
+			}
+		};
+
+		window.addEventListener("keydown", handleKeyDown);
+
+		return () => {
+			window.removeEventListener("keydown", handleKeyDown);
+		};
+	}, [currentIndex, isEndScreenShown]);
+
+	useEffect(() => {
+		let touchstartX = 0;
+		let touchendX = 0;
+
+		const handleTouchStart = (event) => {
+			!isEndScreenShown ? (touchstartX = event.changedTouches[0].screenX) : "";
+		};
+
+		const handleTouchEnd = (event) => {
+			if (!isEndScreenShown) {
+				touchendX = event.changedTouches[0].screenX;
+				handleGesture();
+			}
+		};
+
+		const handleGesture = () => {
+			if (touchendX < touchstartX) {
+				handleDecline();
+			}
+			if (touchendX > touchstartX) {
+				handleConfirm();
+			}
+		};
+
+		window.addEventListener("touchstart", handleTouchStart);
+		window.addEventListener("touchend", handleTouchEnd);
+
+		return () => {
+			window.removeEventListener("touchstart", handleTouchStart);
+			window.removeEventListener("touchend", handleTouchEnd);
+		};
+	}, [currentIndex, isEndScreenShown]);
 
 	return (
 		<>
