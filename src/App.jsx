@@ -13,6 +13,8 @@ function App() {
 	const [editingSet, setEditingSet] = useState(null);
 	const [isLearningModeShown, setIsLearningModeShown] = useState(false);
 	const [selectedSet, setSelectedSet] = useState(null);
+	const [isDeletingSetPopupShown, setIsDeletingSetPopupShown] = useState(false);
+	const [deletingSet, setDeletingSet] = useState(null);
 
 	const changeVisibilityOfEditingMode = () => {
 		setIsEditingModeShown((prevValue) => !prevValue);
@@ -20,6 +22,11 @@ function App() {
 
 	const changeVisibilityOfLearningMode = () => {
 		setIsLearningModeShown((prevValue) => !prevValue);
+	};
+
+	const changeVisibilityOfDeletingSetPopup = (setId) => {
+		setDeletingSet(sets[setId]);
+		setIsDeletingSetPopupShown((prevValue) => !prevValue);
 	};
 
 	const addNewSet = (title, description, flashcards) => {
@@ -96,7 +103,10 @@ function App() {
 					) : (
 						<SetOfFlashcardsList
 							onEditBtnClick={(setId) => editSet(setId)}
-							onDeleteBtnClick={(setId) => deleteSet(setId)}
+							onDeleteBtnClick={(setId) =>
+								changeVisibilityOfDeletingSetPopup(setId)
+							}
+							// onDeleteBtnClick={(setId) => deleteSet(setId)}
 							onSetClick={(setId) => {
 								selectSetToLearn(setId);
 								changeVisibilityOfLearningMode();
@@ -116,7 +126,19 @@ function App() {
 					" "
 				)}
 			</div>
-			<DeletingSetPopup></DeletingSetPopup>
+			{isDeletingSetPopupShown ? (
+				<DeletingSetPopup
+					deletingSet={deletingSet}
+					onConfirmBtnClick={() => {
+						deleteSet(deletingSet.id);
+						console.log(deletingSet);
+						changeVisibilityOfDeletingSetPopup();
+					}}
+					onDeclineBtnClick={changeVisibilityOfDeletingSetPopup}
+				></DeletingSetPopup>
+			) : (
+				""
+			)}
 		</>
 	);
 }
