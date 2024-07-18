@@ -179,10 +179,10 @@ export const LearningMode = ({ onExitBtnClick, set, updateSettings }) => {
 		};
 
 		const handleGesture = () => {
-			if (touchendX < touchstartX) {
+			if (touchendX < touchstartX - 100 ) {
 				handleDecline();
 			}
-			if (touchendX > touchstartX) {
+			if (touchendX > touchstartX + 100) {
 				handleConfirm();
 			}
 		};
