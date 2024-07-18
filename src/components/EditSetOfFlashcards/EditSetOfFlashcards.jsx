@@ -3,6 +3,7 @@ import { Button } from "../Button/Button.jsx";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { FlashcardInEditingMode } from "../FlashcardInEditingMode/FlashcardInEditingMode.jsx";
 import { useState, useEffect } from "react";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 export function EditSetOfFlashcards({
 	onSaveBtnClick,
@@ -96,17 +97,48 @@ export function EditSetOfFlashcards({
 
 			{/* flashcards in editing mode */}
 			<p className={styles.addingConceptsTitle}>FISZKI:</p>
-
-			{flashcardsInEditingMode.map((element) => (
-				<FlashcardInEditingMode
-					key={element.id}
-					id={element.id}
-					cValue={element.concept}
-					dValue={element.definition}
-					onUpdate={updateFlashcard}
-					onDelete={deleteFlashcard}
-				/>
-			))}
+			<DragDropContext
+				onDragEnd={() => {
+					console.log("dragggg");
+				}}
+			>
+				<Droppable droppableId="flashcardsContainer" type="group">
+					{(provided) => (
+						<div
+							{...provided.droppableProps}
+							ref={provided.innerRef}
+							className={styles.droppableContainer}
+						>
+							{flashcardsInEditingMode.map((flashcard, index) => (
+								<Draggable
+									draggableId={flashcard.id.toString()}
+									key={flashcard.id}
+									index={index}
+								>
+									{(provided) => (
+										<div
+										{...provided.draggableProps}
+										{...provided.dragHandleProps}
+											ref={provided.innerRef}
+											className={styles.draggableItem}
+										>
+											<FlashcardInEditingMode
+												key={flashcard.id}
+												id={flashcard.id}
+												cValue={flashcard.concept}
+												dValue={flashcard.definition}
+												onUpdate={updateFlashcard}
+												onDelete={deleteFlashcard}
+											/>
+										</div>
+									)}
+								</Draggable>
+							))}
+							{provided.placeholder}
+						</div>
+					)}
+				</Droppable>
+			</DragDropContext>
 
 			<div className={styles.wrapper}>
 				<Button
