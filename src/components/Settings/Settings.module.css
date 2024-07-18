@@ -1,0 +1,77 @@
+.bgShadow {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	background-color: rgba(0, 0, 0, 0.85);
+	z-index: 10;
+}
+
+.popupContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 80%;
+	min-height: 300px;
+	padding: 2em;
+	background-color: var(--light);
+	border: 5px solid var(--intensiveBlue);
+	border-radius: 8px;
+	z-index: 10;
+}
+
+.settingsButtons {
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	align-items: center;
+	width: 100%;
+	min-height: 150px;
+}
+
+.buttons {
+	display: flex;
+	gap: 1em;
+}
+
+.saveBtn,
+.cancelBtn {
+	padding: 0.6em;
+	font-size: 1.6rem;
+	background: transparent;
+	border: none;
+	border: 2px solid var(--intensiveBlue);
+	border-radius: 8px;
+
+	cursor: pointer;
+}
+
+.saveBtn:hover,
+.cancelBtn:hover {
+	background-color: var(--lightBlue);
+}
+
+@media (min-width: 576px) {
+	.popupContainer {
+		padding: 3em;
+	}
+}
+
+@media (min-width: 768px) {
+	.popupContainer {
+		padding: 5em;
+	}
+}
+
+@media (min-width: 992px) {
+	.popupContainer {
+		padding: 6em;
+		max-width: 800px;
+		min-height: 400px;
+	}
+}

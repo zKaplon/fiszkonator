@@ -1,5 +1,6 @@
 import styles from "./LearningMode.module.css";
 import { Button } from "../Button/Button.jsx";
+import { Settings } from "../Settings/Settings.jsx";
 import {
 	faCheck,
 	faXmark,
@@ -8,10 +9,11 @@ import {
 	faHouse,
 	faRepeat,
 	faExclamationTriangle,
+	faGear,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 
-export const LearningMode = ({ onExitBtnClick, set }) => {
+export const LearningMode = ({ onExitBtnClick, set, updateSettings }) => {
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [animationClass, setAnimationClass] = useState("");
 	const [knownFlashcards, setKnownFlashcards] = useState([]);
@@ -19,6 +21,10 @@ export const LearningMode = ({ onExitBtnClick, set }) => {
 	const [isEndScreenShown, setIsEndScreenShown] = useState(false);
 	const [retryFlashcards, setRetryFlashcards] = useState([]);
 	const [retryMode, setRetryMode] = useState(false);
+	const [areSettingsShown, setAreSettingsShown] = useState(false);
+	const [isDefFirstModeActivated, setIsDefFirstModeActivated] = useState(
+		set.settings.isDefFirstModeActivated
+	);
 
 	const handleNextCard = (direction) => {
 		if (
@@ -129,6 +135,14 @@ export const LearningMode = ({ onExitBtnClick, set }) => {
 		console.log("obkrecono karte");
 	};
 
+	const changeVisibilityOfSettings = () => {
+		setAreSettingsShown((prevValue) => !prevValue);
+	};
+
+	const changeIsDefFirstModeActivated = (value) => {
+		setIsDefFirstModeActivated(value);
+	};
+
 	useEffect(() => {
 		const handleKeyDown = (event) => {
 			if (!isEndScreenShown) {
@@ -184,6 +198,12 @@ export const LearningMode = ({ onExitBtnClick, set }) => {
 
 	return (
 		<>
+			{areSettingsShown ? (
+				<Settings set={set} onCancelBtnClick={changeVisibilityOfSettings} updateSettings={updateSettings} isDefFirstModeActivated={isDefFirstModeActivated} changeIsDefFirstModeActivated={changeIsDefFirstModeActivated}></Settings>
+			) : (
+				" "
+			)}
+
 			{isEndScreenShown ? (
 				<div className={styles.endScreen}>
 					<p className={styles.endScreenText}>Gratulacje! To już wszystko!</p>
@@ -221,11 +241,18 @@ export const LearningMode = ({ onExitBtnClick, set }) => {
 						) : (
 							""
 						)}
-						<Button
-							icon={faX}
-							btnClass="exitBtn"
-							onClick={onExitBtnClick}
-						></Button>
+						<div className={styles.headerButtons}>
+							<Button
+								icon={faGear}
+								btnClass="settingsBtn"
+								onClick={changeVisibilityOfSettings}
+							></Button>
+							<Button
+								icon={faX}
+								btnClass="exitBtn"
+								onClick={onExitBtnClick}
+							></Button>
+						</div>
 					</div>
 					<div
 						className={`${styles.card} ${animationClass}`}
@@ -233,23 +260,18 @@ export const LearningMode = ({ onExitBtnClick, set }) => {
 					>
 						{(retryMode ? retryFlashcards : set.flashcards)[0] ? (
 							<>
+
 								<div className={styles.cardFront}>
 									<p className={styles.textFront}>
-										{
-											(retryMode ? retryFlashcards : set.flashcards)[
-												currentIndex
-											].concept
-										}
+										{(isDefFirstModeActivated) ? ((retryMode ? retryFlashcards : set.flashcards)[currentIndex].definition) : ((retryMode ? retryFlashcards : set.flashcards)[currentIndex].concept)}
 									</p>
 									<p className={styles.rotateText}>kliknij aby obrócić</p>
 								</div>
 								<div className={styles.cardBack}>
 									<p className={styles.textBack}>
-										{
-											(retryMode ? retryFlashcards : set.flashcards)[
-												currentIndex
-											].definition
-										}
+										{isDefFirstModeActivated
+											? (retryMode ? retryFlashcards : set.flashcards)[currentIndex].concept
+											: (retryMode ? retryFlashcards : set.flashcards)[currentIndex].definition}
 									</p>
 									<p className={styles.rotateText}>kliknij aby obrócić</p>
 								</div>

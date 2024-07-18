@@ -37,10 +37,15 @@ export function Button({ icon, btnClass, onClick, text }) {
 	if (btnClass === "houseBtn") {
 		btnType = styles.houseBtn;
 	}
-
+	if (btnClass === "settingsBtn") {
+		btnType = styles.settingsBtn;
+	}
+	if (btnClass === "defModeBtn") {
+		btnType = styles.defModeBtn;
+	}
 
 	return (
-		<button className={`${styles.btnReset} ${btnType}`} onClick={onClick}> 
+		<button className={`${styles.btnReset} ${btnType}`} onClick={onClick}>
 			<Icon icon={icon}></Icon>
 			<p>{text}</p>
 		</button>

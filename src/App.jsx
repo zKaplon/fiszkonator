@@ -8,7 +8,15 @@ import { LearningMode } from "./components/LearningMode/LearningMode";
 import { DeletingSetPopup } from "./components/DeletingSetPopup/DeletingSetPopup";
 
 function App() {
-	const [sets, setSets] = useState([]);
+	const [sets, setSets] = useState([
+		{
+			title: "fegew",
+			description: "",
+			flashcards: [{ concept: "poj", definition: "def", id: 0 }],
+			settings: { isDefFirstModeActivated: true },
+			id: 0,
+		},
+	]);
 	const [isEditingModeShown, setIsEditingModeShown] = useState(false);
 	const [editingSet, setEditingSet] = useState(null);
 	const [isLearningModeShown, setIsLearningModeShown] = useState(false);
@@ -35,6 +43,7 @@ function App() {
 				title: title,
 				description: description,
 				flashcards: flashcards,
+				settings: { isDefFirstModeActivated: false },
 				id: prevBase.length > 0 ? prevBase.at(-1).id + 1 : 0,
 			};
 			const updatedBase = [...prevBase, newSet];
@@ -56,11 +65,11 @@ function App() {
 		console.log("selected set:" + selectedSet);
 	};
 
-	const saveEditedSet = (title, description, flashcards) => {
+	const saveEditedSet = (title, description, settings, flashcards) => {
 		setSets((prevBase) => {
 			const updatedBase = prevBase.map((set) =>
 				set.id === editingSet.id
-					? { ...set, title, description, flashcards }
+					? { ...set, title, description, settings, flashcards }
 					: set
 			);
 			console.log(updatedBase);
@@ -73,6 +82,16 @@ function App() {
 	const deleteSet = (setId) => {
 		setSets((prevBase) => {
 			const updatedBase = prevBase.filter((set) => set.id !== setId);
+			return updatedBase;
+		});
+	};
+
+	const updateSettings = (setId, newSettings) => {
+		setSets((prevBase) => {
+			const updatedBase = prevBase.map((set) =>
+				set.id === setId ? { ...set, settings: newSettings } : set
+			);
+
 			return updatedBase;
 		});
 	};
@@ -93,6 +112,7 @@ function App() {
 						<LearningMode
 							onExitBtnClick={changeVisibilityOfLearningMode}
 							set={selectedSet}
+							updateSettings={updateSettings}
 						></LearningMode>
 					) : isEditingModeShown ? (
 						<EditSetOfFlashcards
