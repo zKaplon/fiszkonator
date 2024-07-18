@@ -6,10 +6,10 @@
 	position: relative;
 	align-items: center;
 	width: 100%;
-	margin: 2em 0;
 	padding: 4em 2em 2em 2em;
 	border: 2px solid var(--mediumBlue);
 	border-radius: 8px;
+	background-color: var(--light);
 }
 
 .conceptContainer,
@@ -56,7 +56,6 @@
 @media (min-width: 992px) {
 	.flashcardInEditingMode {
 		gap: 4em;
-		margin: 4em 0;
 		padding: 3em;
 	}
 

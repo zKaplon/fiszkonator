@@ -66,6 +66,11 @@
 	text-align: center;
 }
 
+
+.draggableItem {
+	padding: 1em 0;
+}
+
 .buttons {
 	margin: 1em 0;
 	display: flex;

@@ -3,7 +3,7 @@ import { Button } from "../Button/Button.jsx";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { FlashcardInEditingMode } from "../FlashcardInEditingMode/FlashcardInEditingMode.jsx";
 import { useState, useEffect } from "react";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 
 export function EditSetOfFlashcards({
 	onSaveBtnClick,
@@ -60,6 +60,26 @@ export function EditSetOfFlashcards({
 		});
 	};
 
+	const handleDragDrop = ({ source, destination, type }) => {
+		if (!destination) return;
+		if (
+			source.droppableId === destination.droppableId &&
+			source.index === destination.index
+		)
+			return;
+		if (type === "group") {
+			const reorderedFlashcards = [...flashcardsInEditingMode];
+
+			const sourceIndex = source.index;
+			const destinationIndex = destination.index;
+
+			const [removedFlashcard] = reorderedFlashcards.splice(sourceIndex, 1);
+			reorderedFlashcards.splice(destinationIndex, 0, removedFlashcard);
+
+			return setFlashcardsInEditingMode(reorderedFlashcards);
+		}
+	};
+
 	return (
 		<div className={styles.editModeContainer}>
 			{/* title */}
@@ -97,11 +117,7 @@ export function EditSetOfFlashcards({
 
 			{/* flashcards in editing mode */}
 			<p className={styles.addingConceptsTitle}>FISZKI:</p>
-			<DragDropContext
-				onDragEnd={() => {
-					console.log("dragggg");
-				}}
-			>
+			<DragDropContext onDragEnd={handleDragDrop}>
 				<Droppable droppableId="flashcardsContainer" type="group">
 					{(provided) => (
 						<div
@@ -117,8 +133,8 @@ export function EditSetOfFlashcards({
 								>
 									{(provided) => (
 										<div
-										{...provided.draggableProps}
-										{...provided.dragHandleProps}
+											{...provided.draggableProps}
+											{...provided.dragHandleProps}
 											ref={provided.innerRef}
 											className={styles.draggableItem}
 										>
