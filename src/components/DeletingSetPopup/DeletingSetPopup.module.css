@@ -8,6 +8,7 @@
 	bottom: 0;
 	right: 0;
 	background-color: rgba(0, 0, 0, 0.7);
+	z-index: 3;
 }
 
 .popupContainer {
@@ -20,10 +21,11 @@
 	padding: 2em;
 	background-color: #fff;
 	border-radius: 8px;
+	z-index: 3;
 }
 
 .popupText {
-    margin: .4em 0;
+	margin: 0.4em 0;
 	font-size: 2.5rem;
 	text-align: center;
 	color: var(--intensiveBlue);
@@ -54,18 +56,18 @@
 
 @media (min-width: 768px) {
 	.popupContainer {
-        padding: 5em;
+		padding: 5em;
 	}
 
-    .popupText {
+	.popupText {
 		font-size: 4rem;
-		margin: .6em 0;
+		margin: 0.6em 0;
 	}
 }
 
 @media (min-width: 992px) {
 	.popupContainer {
-        padding: 6em;
+		padding: 6em;
 		max-width: 800px;
 		min-height: 400px;
 	}

@@ -6,6 +6,7 @@ import { EditSetOfFlashcards } from "./components/EditSetOfFlashcards/EditSetOfF
 import { useState } from "react";
 import { LearningMode } from "./components/LearningMode/LearningMode";
 import { DeletingSetPopup } from "./components/DeletingSetPopup/DeletingSetPopup";
+import { LoginForm } from "./components/LoginForm/LoginForm";
 
 function App() {
 	const [sets, setSets] = useState([
@@ -23,6 +24,7 @@ function App() {
 	const [selectedSet, setSelectedSet] = useState(null);
 	const [isDeletingSetPopupShown, setIsDeletingSetPopupShown] = useState(false);
 	const [deletingSet, setDeletingSet] = useState(null);
+	const [isLoginModeShown, setIsLoginModeShown] = useState(true);
 
 	const changeVisibilityOfEditingMode = () => {
 		setIsEditingModeShown((prevValue) => !prevValue);
@@ -96,9 +98,15 @@ function App() {
 		});
 	};
 
+	const showMenu = () => {
+		setIsLoginModeShown(false);
+	};
+
 	return (
 		<>
 			<div className={styles.background}>
+				<div className={styles.bgShadow}></div>
+
 				{!isEditingModeShown && !isLearningModeShown ? (
 					<header className={styles.titleBackground}>
 						<h1 className={styles.siteTitle}>FISZKONATOR</h1>
@@ -106,37 +114,51 @@ function App() {
 				) : (
 					""
 				)}
-
+				
 				<main className={styles.setsOfFlashcardsContainer}>
+					{isLoginModeShown ? (
+						<>
+							<LoginForm showMenu={showMenu}></LoginForm>
+						</>
+					) : (
+						""
+					)}
 					{isLearningModeShown ? (
 						<LearningMode
 							onExitBtnClick={changeVisibilityOfLearningMode}
 							set={selectedSet}
 							updateSettings={updateSettings}
 						></LearningMode>
-					) : isEditingModeShown ? (
+					) : (
+						""
+					)}{" "}
+					{isEditingModeShown ? (
 						<EditSetOfFlashcards
 							onSaveBtnClick={editingSet ? saveEditedSet : addNewSet}
 							onCancelBtnClick={changeVisibilityOfEditingMode}
 							existingSet={editingSet}
 						></EditSetOfFlashcards>
 					) : (
+						""
+					)}
+					{!isEditingModeShown && !isLearningModeShown && !isLoginModeShown ? (
 						<SetOfFlashcardsList
 							onEditBtnClick={(setId) => editSet(setId)}
 							onDeleteBtnClick={(setId) =>
 								changeVisibilityOfDeletingSetPopup(setId)
 							}
-							// onDeleteBtnClick={(setId) => deleteSet(setId)}
 							onSetClick={(setId) => {
 								selectSetToLearn(setId);
 								changeVisibilityOfLearningMode();
 							}}
 							base={sets}
 						></SetOfFlashcardsList>
+					) : (
+						""
 					)}
 				</main>
 
-				{!isEditingModeShown && !isLearningModeShown ? (
+				{!isEditingModeShown && !isLearningModeShown && !isLoginModeShown ? (
 					<Button
 						icon={faCirclePlus}
 						btnClass={`${"addBtn"}`}
