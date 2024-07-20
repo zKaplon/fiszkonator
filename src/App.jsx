@@ -3,21 +3,76 @@ import { Button } from "./components/Button/Button";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { SetOfFlashcardsList } from "./components/SetOfFlashcardsList/SetOfFlashcardsList";
 import { EditSetOfFlashcards } from "./components/EditSetOfFlashcards/EditSetOfFlashcards";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { LearningMode } from "./components/LearningMode/LearningMode";
 import { DeletingSetPopup } from "./components/DeletingSetPopup/DeletingSetPopup";
 import { LoginForm } from "./components/LoginForm/LoginForm";
 
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { db } from "./firebase";
+import { doc, setDoc, getDoc } from "firebase/firestore";
+
 function App() {
+	const auth = getAuth();
+
+	const handleSave = async () => {
+		const user = auth.currentUser;
+		if (user) {
+			try {
+				const userDocRef = doc(db, "users", user.uid);
+				await setDoc(
+					userDocRef,
+					{ userData: userData, sets: sets },
+					{ merge: true }
+				);
+				console.log("User data saved to Firestore");
+			} catch (error) {
+				console.error("Error saving user data:", error);
+			}
+		} else {
+			console.error("No user is signed in");
+		}
+	};
+
+	useEffect(() => {
+		const unsubscribe = onAuthStateChanged(auth, (user) => {
+			if (user) {
+				const fetchData = async () => {
+					try {
+						const userDocRef = doc(db, "users", user.uid);
+						const userDoc = await getDoc(userDocRef);
+						if (userDoc.exists()) {
+							setUserData(userDoc.data().userData);
+							setSets(userDoc.data().sets);
+						} else {
+							console.log("No such document!");
+						}
+					} catch (error) {
+						console.error("Error fetching user data:", error);
+					}
+				};
+
+				fetchData();
+			} else {
+				setUserData({});
+				setSets([]);
+			}
+		});
+
+		return () => unsubscribe();
+	}, [auth]);
+
+	const [userData, setUserData] = useState({});
 	const [sets, setSets] = useState([
 		{
-			title: "fegew",
+			title: "testowy zestaw",
 			description: "",
 			flashcards: [{ concept: "poj", definition: "def", id: 0 }],
 			settings: { isDefFirstModeActivated: true },
 			id: 0,
 		},
 	]);
+
 	const [isEditingModeShown, setIsEditingModeShown] = useState(false);
 	const [editingSet, setEditingSet] = useState(null);
 	const [isLearningModeShown, setIsLearningModeShown] = useState(false);
@@ -25,6 +80,8 @@ function App() {
 	const [isDeletingSetPopupShown, setIsDeletingSetPopupShown] = useState(false);
 	const [deletingSet, setDeletingSet] = useState(null);
 	const [isLoginModeShown, setIsLoginModeShown] = useState(true);
+
+	// tryby
 
 	const changeVisibilityOfEditingMode = () => {
 		setIsEditingModeShown((prevValue) => !prevValue);
@@ -38,6 +95,8 @@ function App() {
 		setDeletingSet(sets[setId]);
 		setIsDeletingSetPopupShown((prevValue) => !prevValue);
 	};
+
+	// dodawanie
 
 	const addNewSet = (title, description, flashcards) => {
 		setSets((prevBase) => {
@@ -54,6 +113,8 @@ function App() {
 		});
 		changeVisibilityOfEditingMode();
 	};
+
+	// edycja
 
 	const editSet = (setId) => {
 		const setToEdit = sets.find((set) => set.id === setId);
@@ -81,12 +142,16 @@ function App() {
 		setEditingSet(null);
 	};
 
+	// usuwanie
+
 	const deleteSet = (setId) => {
 		setSets((prevBase) => {
 			const updatedBase = prevBase.filter((set) => set.id !== setId);
 			return updatedBase;
 		});
 	};
+
+	// ustawienia
 
 	const updateSettings = (setId, newSettings) => {
 		setSets((prevBase) => {
@@ -98,14 +163,22 @@ function App() {
 		});
 	};
 
+	// logowanie
+
 	const showMenu = () => {
 		setIsLoginModeShown(false);
+	};
+
+	const saveUserData = (userData) => {
+		setUserData(userData);
 	};
 
 	return (
 		<>
 			<div className={styles.background}>
 				<div className={styles.bgShadow}></div>
+
+				<button onClick={handleSave}>aaaa</button>
 
 				{!isEditingModeShown && !isLearningModeShown ? (
 					<header className={styles.titleBackground}>
@@ -114,11 +187,14 @@ function App() {
 				) : (
 					""
 				)}
-				
+
 				<main className={styles.setsOfFlashcardsContainer}>
 					{isLoginModeShown ? (
 						<>
-							<LoginForm showMenu={showMenu}></LoginForm>
+							<LoginForm
+								showMenu={showMenu}
+								saveUserData={saveUserData}
+							></LoginForm>
 						</>
 					) : (
 						""

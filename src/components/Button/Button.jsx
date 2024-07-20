@@ -52,7 +52,7 @@ export function Button({ icon, btnClass, onClick, text }) {
 
 	return (
 		<button className={`${styles.btnReset} ${btnType}`} onClick={onClick}>
-			<Icon icon={icon}></Icon>
+			{icon ? <Icon icon={icon}></Icon> : ""}
 			<p>{text}</p>
 		</button>
 	);
