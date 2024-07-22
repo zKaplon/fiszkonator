@@ -30,6 +30,7 @@
 }
 
 .siteTitle {
+	height: 10vh;
 	font-size: 3.8rem;
 	text-align: center;
 	color: var(--light);
@@ -42,6 +43,7 @@
 }
 
 .setsOfFlashcardsContainer {
+	height: 90vh;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -65,13 +67,11 @@
 /* DESKTOP */
 @media (min-width: 768px) {
 	.setsOfFlashcardsContainer {
-		display: flex;
 		flex-direction: row;
 		justify-content: center;
 		align-items: start;
 		flex-wrap: wrap;
 		gap: 3em;
-		height: 100%;
 		width: 80%;
 	}
 }
@@ -88,6 +88,7 @@
 /* //// */
 :root {
 	--light: #fcfcfc;
+	--lightHover: #e8e8e8;
 	--cream: #fff9d0;
 	--lightBlue: #caf4ff;
 	--mediumBlue: #a0deff;

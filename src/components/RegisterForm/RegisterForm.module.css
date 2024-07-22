@@ -1,8 +1,8 @@
 .wrapper {
 	max-width: 44em;
+	padding: 3em 4em;
 	color: var(--light);
 	border-radius: 10px;
-	padding: 3em 4em;
 	border: 2px solid rgba(255, 255, 255, 0.2);
 	background-color: #a9a9a949;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -49,6 +49,7 @@
 }
 
 .errorText {
+	margin-top: 1.4em;
 	font-size: 1.4rem;
 	text-align: center;
 	color: red;
@@ -69,6 +70,12 @@
 	font-weight: bold;
 }
 
+.wrapper .btn:hover {
+background-color: var(--lightHover);
+border: 3px solid var(--intensiveBlue);
+color: var(--darkBlue);
+}
+
 .registerLink {
 	font-size: 1.4rem;
 	text-align: center;
@@ -78,6 +85,7 @@
 	color: var(--light);
 	text-decoration: none;
 	font-weight: bold;
+	cursor: pointer;
 }
 
 .registerLink p a:hover {
@@ -86,5 +94,68 @@
 
 .buttons {
 	display: flex;
-	gap: 3em;
+	flex-direction: column;
+	gap: 2em;
+	width: 80%;
+	height: 100%;
+}
+
+@media (min-width: 576px) {
+	.wrapper {
+		min-width: 55em;
+		padding: 6em 8em;
+	}
+
+	.wrapper h1 {
+		font-size: 4rem;
+	}
+
+	.inputBox {
+		height: 7em;
+		margin: 5em 0;
+	}
+
+	.inputBox input {
+		font-size: 2.2rem;
+		color: var(--light);
+		padding: 1.6em 2.6em 1.6em 1.6em;
+	}
+
+	.inputBox svg {
+		right: 3em;
+		width: 3em;
+		height: 3em;
+	}
+
+	.errorText {
+		margin-top: 2em;
+		font-size: 2rem;
+	}
+
+	.wrapper .btn {
+		height: 4em;
+		margin: 2em 0;
+		font-size: 2rem;
+	}
+
+	.registerLink {
+		font-size: 2rem;
+	}
+
+	.buttons {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 5em;
+		width: 60%;
+	}
+}
+
+@media (min-width: 992px) {
+	.buttons {
+		flex-direction: row;
+		justify-content: space-around;
+		flex-wrap: wrap;
+		width: 80%;
+	}
 }
