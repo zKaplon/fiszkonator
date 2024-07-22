@@ -13,247 +13,267 @@ import { db } from "./firebase";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 
 function App() {
-    const auth = getAuth();
+    
+	// stan:
+	const [userData, setUserData] = useState({});
+	const [sets, setSets] = useState([
+		[
+			{
+				title: "testowy zestaw",
+				description: "",
+				flashcards: [{ concept: "poj", definition: "def", id: 0 }],
+				settings: { isDefFirstModeActivated: true },
+				id: 0,
+			},
+		],
+	]);
+	const [isEditingModeShown, setIsEditingModeShown] = useState(false);
+	const [editingSet, setEditingSet] = useState(null);
+	const [isLearningModeShown, setIsLearningModeShown] = useState(false);
+	const [selectedSet, setSelectedSet] = useState(null);
+	const [isDeletingSetPopupShown, setIsDeletingSetPopupShown] = useState(false);
+	const [deletingSet, setDeletingSet] = useState(null);
+	const [isLoginModeShown, setIsLoginModeShown] = useState(true);
 
-    const handleSave = async () => {
-        const user = auth.currentUser;
-        if (user) {
-            try {
-                const userDocRef = doc(db, "users", user.uid);
-                await setDoc(
-                    userDocRef,
-                    { userData: userData, sets: sets },
-                    { merge: true }
-                );
-                console.log("User data saved to Firestore");
-            } catch (error) {
-                console.error("Error saving user data:", error);
-            }
-        } else {
-            console.error("No user is signed in");
-        }
-    };
 
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                const fetchData = async () => {
-                    try {
-                        const userDocRef = doc(db, "users", user.uid);
-                        const userDoc = await getDoc(userDocRef);
-                        if (userDoc.exists()) {
-                            setUserData(userDoc.data().userData);
-                            setSets(userDoc.data().sets);
-                        } else {
-                            console.log("No such document!");
-                        }
-                    } catch (error) {
-                        console.error("Error fetching user data:", error);
-                    }
-                };
+	// zapis danych do bazy
+	const auth = getAuth();
 
-                fetchData();
-            } else {
-                setUserData({});
-                setSets([]);
-            }
-        });
+	const saveUserData = (userData) => {
+		setUserData(userData);
+	};
 
-        return () => unsubscribe();
-    }, [auth]);
+	const handleSave = async () => {
+		const user = auth.currentUser;
+		if (user) {
+			try {
+				const userDocRef = doc(db, "users", user.uid);
+				await setDoc(
+					userDocRef,
+					{ userData: userData, sets: sets },
+					{ merge: true }
+				);
+				console.log("User data saved to Firestore");
+			} catch (error) {
+				console.error("Error saving user data:", error);
+			}
+		} else {
+			console.error("No user is signed in");
+		}
+	};
 
-    const [userData, setUserData] = useState({});
-    const [sets, setSets] = useState([
-        {
-            title: "testowy zestaw",
-            description: "",
-            flashcards: [{ concept: "poj", definition: "def", id: 0 }],
-            settings: { isDefFirstModeActivated: true },
-            id: 0,
-        },
-    ]);
+	useEffect(() => {
+		const unsubscribe = onAuthStateChanged(auth, (user) => {
+			if (user) {
+				const fetchData = async () => {
+					try {
+						const userDocRef = doc(db, "users", user.uid);
+						const userDoc = await getDoc(userDocRef);
+						if (userDoc.exists()) {
+							setUserData(userDoc.data().userData);
+							setSets(userDoc.data().sets);
+						} else {
+							console.log("No such document!");
+						}
+					} catch (error) {
+						console.error("Error fetching user data:", error);
+					}
+				};
 
-    const [isEditingModeShown, setIsEditingModeShown] = useState(false);
-    const [editingSet, setEditingSet] = useState(null);
-    const [isLearningModeShown, setIsLearningModeShown] = useState(false);
-    const [selectedSet, setSelectedSet] = useState(null);
-    const [isDeletingSetPopupShown, setIsDeletingSetPopupShown] = useState(false);
-    const [deletingSet, setDeletingSet] = useState(null);
-    const [isLoginModeShown, setIsLoginModeShown] = useState(true);
+				fetchData();
+			} else {
+				setUserData({});
+				setSets([]);
+			}
+		});
 
-    useEffect(() => {
-        if (sets.length > 0) {
-            handleSave();
-        }
-    }, [sets]);
+		return () => unsubscribe();
+	}, [auth]);
 
-    const changeVisibilityOfEditingMode = () => {
-        setIsEditingModeShown((prevValue) => !prevValue);
-    };
+	useEffect(() => {
+		if (sets.length > 0) {
+			handleSave();
+		}
+	}, [sets]);
 
-    const changeVisibilityOfLearningMode = () => {
-        setIsLearningModeShown((prevValue) => !prevValue);
-    };
 
-    const changeVisibilityOfDeletingSetPopup = (setId) => {
-        setDeletingSet(sets[setId]);
-        setIsDeletingSetPopupShown((prevValue) => !prevValue);
-    };
+	// zmiana widocznosci trybow
+	const changeVisibilityOfEditingMode = () => {
+		setIsEditingModeShown((prevValue) => !prevValue);
+	};
 
-    const addNewSet = (title, description, flashcards) => {
-        setSets((prevBase) => {
-            const newSet = {
-                title: title,
-                description: description,
-                flashcards: flashcards,
-                settings: { isDefFirstModeActivated: false },
-                id: prevBase.length > 0 ? prevBase.at(-1).id + 1 : 0,
-            };
-            const updatedBase = [...prevBase, newSet];
-            console.log(updatedBase);
-            return updatedBase;
-        });
-        changeVisibilityOfEditingMode();
-    };
+	const changeVisibilityOfLearningMode = () => {
+		setIsLearningModeShown((prevValue) => !prevValue);
+	};
 
-    const editSet = (setId) => {
-        const setToEdit = sets.find((set) => set.id === setId);
-        setEditingSet(setToEdit);
-        changeVisibilityOfEditingMode();
-    };
-
-    const selectSetToLearn = (setId) => {
-        const selectedSet = sets.find((set) => set.id === setId);
-        setSelectedSet(selectedSet);
-        console.log("selected set:" + selectedSet);
-		
-    };
-
-    const saveEditedSet = (title, description, flashcards) => {
-        setSets((prevBase) => {
-            const updatedBase = prevBase.map((set) =>
-                set.id === editingSet.id
-                    ? { ...set, title, description, flashcards }
-                    : set
-            );
-            console.log(updatedBase);
-            return updatedBase;
-        });
-        changeVisibilityOfEditingMode();
-        setEditingSet(null);
-    };
-
-    const deleteSet = (setId) => {
-        setSets((prevBase) => {
-            const updatedBase = prevBase.filter((set) => set.id !== setId);
-            return updatedBase;
-        });
-    };
-
-    const updateSettings = (setId, newSettings) => {
-        setSets((prevBase) => {
-            const updatedBase = prevBase.map((set) =>
-                set.id === setId ? { ...set, settings: newSettings } : set
-            );
-
-            return updatedBase;
-        });
-    };
+	const changeVisibilityOfDeletingSetPopup = (setId) => {
+		setDeletingSet(sets[setId]);
+		setIsDeletingSetPopupShown((prevValue) => !prevValue);
+	};
 
     const showMenu = () => {
-        setIsLoginModeShown(false);
-    };
+		setIsLoginModeShown(false);
+	};
 
-    const saveUserData = (userData) => {
-        setUserData(userData);
-    };
 
-    return (
-        <>
-            <div className={styles.background}>
-                <div className={styles.bgShadow}></div>
+	// dodawanie setu
+	const addNewSet = (title, description, flashcards) => {
+		setSets((prevBase) => {
+			const newSet = {
+				title: title,
+				description: description,
+				flashcards: flashcards,
+				settings: { isDefFirstModeActivated: false },
+				id: prevBase.length > 0 ? prevBase.at(-1).id + 1 : 0,
+			};
+			const updatedBase = [...prevBase, newSet];
+			console.log(updatedBase);
+			return updatedBase;
+		});
+		changeVisibilityOfEditingMode();
+	};
 
-                <button onClick={handleSave}>aaaa</button>
 
-                {!isEditingModeShown && !isLearningModeShown ? (
-                    <header className={styles.titleBackground}>
-                        <h1 className={styles.siteTitle}>FISZKONATOR</h1>
-                    </header>
-                ) : (
-                    ""
-                )}
 
-                <main className={styles.setsOfFlashcardsContainer}>
-                    {isLoginModeShown ? (
-                        <>
-                            <LoginForm
-                                showMenu={showMenu}
-                                saveUserData={saveUserData}
-                            ></LoginForm>
-                        </>
-                    ) : (
-                        ""
-                    )}
-                    {isLearningModeShown ? (
-                        <LearningMode
-                            onExitBtnClick={changeVisibilityOfLearningMode}
-                            set={selectedSet}
-                            updateSettings={updateSettings}
-                        ></LearningMode>
-                    ) : (
-                        ""
-                    )}{" "}
-                    {isEditingModeShown ? (
-                        <EditSetOfFlashcards
-                            onSaveBtnClick={editingSet ? saveEditedSet : addNewSet}
-                            onCancelBtnClick={changeVisibilityOfEditingMode}
-                            existingSet={editingSet}
-                        ></EditSetOfFlashcards>
-                    ) : (
-                        ""
-                    )}
-                    {!isEditingModeShown && !isLearningModeShown && !isLoginModeShown ? (
-                        <SetOfFlashcardsList
-                            onEditBtnClick={(setId) => editSet(setId)}
-                            onDeleteBtnClick={(setId) =>
-                                changeVisibilityOfDeletingSetPopup(setId)
-                            }
-                            onSetClick={(setId) => {
-                                selectSetToLearn(setId);
-                                changeVisibilityOfLearningMode();
-                            }}
-                            base={sets}
-                        ></SetOfFlashcardsList>
-                    ) : (
-                        ""
-                    )}
-                </main>
+	//edycja setu
+	const editSet = (setId) => {
+		const setToEdit = sets.find((set) => set.id === setId);
+		setEditingSet(setToEdit);
+		changeVisibilityOfEditingMode();
+	};
 
-                {!isEditingModeShown && !isLearningModeShown && !isLoginModeShown ? (
-                    <Button
-                        icon={faCirclePlus}
-                        btnClass={`${"addBtn"}`}
-                        onClick={changeVisibilityOfEditingMode}
-                    ></Button>
-                ) : (
-                    " "
-                )}
-            </div>
-            {isDeletingSetPopupShown ? (
-                <DeletingSetPopup
-                    deletingSet={deletingSet}
-                    onConfirmBtnClick={() => {
-                        deleteSet(deletingSet.id);
-                        console.log(deletingSet);
-                        changeVisibilityOfDeletingSetPopup();
-                    }}
-                    onDeclineBtnClick={changeVisibilityOfDeletingSetPopup}
-                ></DeletingSetPopup>
-            ) : (
-                ""
-            )}
-        </>
-    );
+	const saveEditedSet = (title, description, flashcards) => {
+		setSets((prevBase) => {
+			const updatedBase = prevBase.map((set) =>
+				set.id === editingSet.id
+					? { ...set, title, description, flashcards }
+					: set
+			);
+			console.log(updatedBase);
+			return updatedBase;
+		});
+		changeVisibilityOfEditingMode();
+		setEditingSet(null);
+	};
+
+
+	// usuwanie setow
+	const deleteSet = (setId) => {
+		setSets((prevBase) => {
+			const updatedBase = prevBase.filter((set) => set.id !== setId);
+			return updatedBase;
+		});
+	};
+
+
+	// edycja ustawien
+	const updateSettings = (setId, newSettings) => {
+		setSets((prevBase) => {
+			const updatedBase = prevBase.map((set) =>
+				set.id === setId ? { ...set, settings: newSettings } : set
+			);
+
+			return updatedBase;
+		});
+	};
+
+
+	// zaznaczanie setu do nauki
+	const selectSetToLearn = (setId) => {
+		const selectedSet = sets.find((set) => set.id === setId);
+		setSelectedSet(selectedSet);
+		console.log("selected set:" + selectedSet);
+	};
+
+	
+
+
+	return (
+		<>
+			<div className={styles.background}>
+				<div className={styles.bgShadow}></div>
+
+				{/* <button onClick={handleSave}>aaaa</button> */}
+
+				{!isEditingModeShown && !isLearningModeShown ? (
+					<header className={styles.titleBackground}>
+						<h1 className={styles.siteTitle}>FISZKONATOR</h1>
+					</header>
+				) : (
+					""
+				)}
+
+				<main className={styles.setsOfFlashcardsContainer}>
+					{isLoginModeShown ? (
+						<>
+							<LoginForm
+								showMenu={showMenu}
+								saveUserData={saveUserData}
+							></LoginForm>
+						</>
+					) : (
+						""
+					)}
+					{isLearningModeShown ? (
+						<LearningMode
+							onExitBtnClick={changeVisibilityOfLearningMode}
+							set={selectedSet}
+							updateSettings={updateSettings}
+						></LearningMode>
+					) : (
+						""
+					)}{" "}
+					{isEditingModeShown ? (
+						<EditSetOfFlashcards
+							onSaveBtnClick={editingSet ? saveEditedSet : addNewSet}
+							onCancelBtnClick={changeVisibilityOfEditingMode}
+							existingSet={editingSet}
+						></EditSetOfFlashcards>
+					) : (
+						""
+					)}
+					{!isEditingModeShown && !isLearningModeShown && !isLoginModeShown ? (
+						<SetOfFlashcardsList
+							onEditBtnClick={(setId) => editSet(setId)}
+							onDeleteBtnClick={(setId) =>
+								changeVisibilityOfDeletingSetPopup(setId)
+							}
+							onSetClick={(setId) => {
+								selectSetToLearn(setId);
+								changeVisibilityOfLearningMode();
+							}}
+							base={sets}
+						></SetOfFlashcardsList>
+					) : (
+						""
+					)}
+				</main>
+
+				{!isEditingModeShown && !isLearningModeShown && !isLoginModeShown ? (
+					<Button
+						icon={faCirclePlus}
+						btnClass={`${"addBtn"}`}
+						onClick={changeVisibilityOfEditingMode}
+					></Button>
+				) : (
+					" "
+				)}
+			</div>
+			{isDeletingSetPopupShown ? (
+				<DeletingSetPopup
+					deletingSet={deletingSet}
+					onConfirmBtnClick={() => {
+						deleteSet(deletingSet.id);
+						console.log(deletingSet);
+						changeVisibilityOfDeletingSetPopup();
+					}}
+					onDeclineBtnClick={changeVisibilityOfDeletingSetPopup}
+				></DeletingSetPopup>
+			) : (
+				""
+			)}
+		</>
+	);
 }
 
 export default App;

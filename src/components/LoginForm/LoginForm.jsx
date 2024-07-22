@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Button } from "../Button/Button";
 import styles from "./LoginForm.module.css";
-// import { Icon } from "../Icon/Icon";
-// import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
+import { Icon } from "../Icon/Icon";
+import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 import { RegisterForm } from "../RegisterForm/RegisterForm";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
@@ -33,8 +33,9 @@ export const LoginForm = ({ showMenu, saveUserData }) => {
 			saveUserData(newUserData);
 			showMenu();
 		} catch (error) {
-			console.error("Error logging in:", error);
-			// setError("Invalid email or password");
+			document.querySelector(
+				`.errorText`
+			).textContent = `Nieprawidłowy email i/lub hasło!`;
 		}
 	};
 
@@ -56,7 +57,7 @@ export const LoginForm = ({ showMenu, saveUserData }) => {
 								required
 								onChange={(e) => setEmail(e.target.value)}
 							/>
-							{/* <Icon icon={faUser} className={styles.icon}></Icon> */}
+							<Icon icon={faUser}></Icon>
 						</div>
 						<div className={styles.inputBox}>
 							<input
@@ -65,7 +66,7 @@ export const LoginForm = ({ showMenu, saveUserData }) => {
 								required
 								onChange={(e) => setPassword(e.target.value)}
 							/>
-							{/* <Icon icon={faLock} className={styles.icon}></Icon> */}
+							<Icon icon={faLock}></Icon>
 						</div>
 
 						<div className={styles.rememberForgot}>
@@ -75,7 +76,7 @@ export const LoginForm = ({ showMenu, saveUserData }) => {
 							</label>
 							<a href="#">Zapomniałeś hasła?</a>
 						</div>
-
+						<p className={`errorText ${styles.errorText}`}></p>
 						<button type="submit" className={styles.btn}>
 							Zaloguj
 						</button>
