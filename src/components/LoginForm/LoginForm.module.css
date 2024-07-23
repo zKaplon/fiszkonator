@@ -1,5 +1,6 @@
 .wrapper {
 	max-width: 44em;
+	margin-bottom: 4em;
 	padding: 3em 4em;
 	color: var(--light);
 	border-radius: 10px;
