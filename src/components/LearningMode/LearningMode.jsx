@@ -216,12 +216,17 @@ export const LearningMode = ({ onExitBtnClick, set, updateSettings, enableScroll
 			document.addEventListener("touchmove", (e) => {
 				e.preventDefault();
 			}, { passive: false });
-			document.querySelector(`.${styles.card}`).addEventListener("touchmove", (e) => {
-				e.stopPropagation();		
-			})
+			// document.querySelector(`.${styles.card}`).addEventListener("touchmove", (e) => {
+			// 	e.stopPropagation();		
+			// })
 		} else {
 			enableScroll();
-			// document.body.style.height = "none";
+			document.removeEventListener("touchmove", (e) => {
+				e.preventDefault();
+			}, { passive: false });
+			// document.querySelector(`.${styles.card}`).removeEventListener("touchmove", (e) => {
+			// 	e.stopPropagation();		
+			// })
 		}
 	}, [isEndScreenShown]);
 
