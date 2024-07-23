@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "../Button/Button";
 import styles from "./LoginForm.module.css";
 import { Icon } from "../Icon/Icon";
@@ -11,6 +11,17 @@ export const LoginForm = ({ showMenu, saveUserData }) => {
 	const [isRegisterFormShown, setIsRegisterFormShown] = useState(false);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [rememberMe, setRememberMe] = useState(false);
+
+	useEffect(() => {
+		const savedEmail = localStorage.getItem("email");
+		const savedPassword = localStorage.getItem("password");
+		if (savedEmail && savedPassword) {
+			setEmail(savedEmail);
+			setPassword(savedPassword);
+			setRememberMe(true);
+		}
+	}, []);
 
 	const showLoginForm = () => {
 		setIsLoginFormShown(true);
@@ -28,15 +39,35 @@ export const LoginForm = ({ showMenu, saveUserData }) => {
 			console.log("User logged in");
 			const newUserData = {
 				email: email,
-				password: password,
+				// password: password,
 			};
 			saveUserData(newUserData);
 			showMenu();
+
+			const sessionData = {
+				userData: newUserData,
+				sets: [],
+			};
+			const sessionExpiry = new Date().getTime() + 1 * 1000; // 30 sekund
+			localStorage.setItem("sessionData", JSON.stringify(sessionData));
+			localStorage.setItem("sessionExpiry", sessionExpiry.toString());
+
+			if (rememberMe) {
+				localStorage.setItem("email", email);
+				localStorage.setItem("password", password);
+			} else {
+				localStorage.removeItem("email");
+				localStorage.removeItem("password");
+			}
 		} catch (error) {
 			document.querySelector(
 				`.errorText`
 			).textContent = `Nieprawidłowy email i/lub hasło!`;
 		}
+	};
+
+	const handleRememberMeChange = () => {
+		setRememberMe(!rememberMe);
 	};
 
 	return (
@@ -55,6 +86,7 @@ export const LoginForm = ({ showMenu, saveUserData }) => {
 								type="text"
 								placeholder="E-mail"
 								required
+								value={email}
 								onChange={(e) => setEmail(e.target.value)}
 							/>
 							<Icon icon={faUser}></Icon>
@@ -64,6 +96,7 @@ export const LoginForm = ({ showMenu, saveUserData }) => {
 								type="password"
 								placeholder="Hasło"
 								required
+								value={password}
 								onChange={(e) => setPassword(e.target.value)}
 							/>
 							<Icon icon={faLock}></Icon>
@@ -71,7 +104,11 @@ export const LoginForm = ({ showMenu, saveUserData }) => {
 
 						<div className={styles.rememberForgot}>
 							<label>
-								<input type="checkbox" />
+								<input
+									type="checkbox"
+									checked={rememberMe}
+									onChange={handleRememberMeChange}
+								/>
 								Zapamiętaj
 							</label>
 							<a href="#">Zapomniałeś hasła?</a>
@@ -106,27 +143,3 @@ export const LoginForm = ({ showMenu, saveUserData }) => {
 		</>
 	);
 };
-
-//wylogowywanie:
-
-// src/components/Logout.js
-// import React from "react";
-// import { getAuth, signOut } from "firebase/auth";
-
-// const Logout = () => {
-//   const handleLogout = async () => {
-//     const auth = getAuth();
-//     try {
-//       await signOut(auth);
-//       console.log("User logged out");
-//     } catch (error) {
-//       console.error("Error logging out:", error);
-//     }
-//   };
-
-//   return (
-//     <button onClick={handleLogout}>Logout</button>
-//   );
-// };
-
-// export default Logout;
