@@ -130,6 +130,7 @@ function App() {
 
 	const goOnTop = () => {
 		window.scrollTo(0, 0);
+		console.log('top');
 	};
 
 	const changeVisibilityOfEditingMode = () => {
@@ -303,6 +304,7 @@ function App() {
 									changeVisibilityOfDeletingSetPopup(setId)
 								}
 								onSetClick={(setId) => {
+									goOnTop();
 									selectSetToLearn(setId);
 									changeVisibilityOfLearningMode();
 								}}
