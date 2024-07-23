@@ -1,3 +1,17 @@
+.logoutBtn {
+	position: absolute;
+	top: 0;
+	right: 0;
+	font-size: 2rem;
+	color: var(--light);
+	background: none;
+	border: none;
+	outline: none;
+	cursor: pointer;
+
+	z-index: 2;
+}
+
 .background {
 	display: flex;
 	flex-direction: column;

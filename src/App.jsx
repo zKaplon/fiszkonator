@@ -8,7 +8,7 @@ import { LearningMode } from "./components/LearningMode/LearningMode";
 import { DeletingSetPopup } from "./components/DeletingSetPopup/DeletingSetPopup";
 import { LoginForm } from "./components/LoginForm/LoginForm";
 
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { db } from "./firebase";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 
@@ -33,7 +33,7 @@ function App() {
 	const [isLoginModeShown, setIsLoginModeShown] = useState(true);
 	const [isGuestMode, setIsGuestMode] = useState(false);
 	const [isSetsOfFlashcardsListShown, setIsSetsOfFlashcardsListShown] =
-		useState(false);
+		useState(true);
 
 	const auth = getAuth();
 
@@ -115,6 +115,16 @@ function App() {
 			}
 		}
 	}, []);
+
+	const handleLogout = async () => {
+		try {
+			await signOut(auth);
+			console.log("User logged out");
+		} catch (error) {
+			console.error("Error logging out:", error);
+		}
+		location.reload();
+	};
 
 	const changeVisibilityOfEditingMode = () => {
 		setIsEditingModeShown((prevValue) => !prevValue);
@@ -201,12 +211,21 @@ function App() {
 	const saveUserData = (userData) => {
 		setUserData(userData);
 	};
-	
 
 	return (
 		<>
 			<div className={styles.background}>
 				<div className={styles.bgShadow}></div>
+
+				<button
+					className={styles.logoutBtn}
+					onClick={() => {
+						handleLogout();
+						setIsLoginModeShown(true);
+					}}
+				>
+					wyloguj
+				</button>
 
 				{!isEditingModeShown && !isLearningModeShown ? (
 					<header className={styles.titleBackground}>
