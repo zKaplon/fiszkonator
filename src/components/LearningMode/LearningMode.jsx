@@ -199,11 +199,11 @@ export const LearningMode = ({ onExitBtnClick, set, updateSettings, isLearningMo
 
 	useEffect(() => {
 		if (isLearningModeShown && !isEndScreenShown) {
-			document.body.style.overflow = "hidden";
 			window.scrollTo({
 				top: 0,
-				behavior: 'auto' 
+				behavior: 'smooth'
 			});
+			document.body.style.overflow = "hidden";
 		} else {
 			document.body.style.overflow = "auto";
 		}
