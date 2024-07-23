@@ -221,6 +221,22 @@ function App() {
 		setUserData(userData);
 	};
 
+	const disableScroll = () => {
+		document.body.style.overflow = "hidden";
+	};
+
+	const enableScroll = () => {
+		document.body.style.overflow = "auto";
+	};
+
+	useEffect(() => {
+		if (isLearningModeShown) {
+			disableScroll();
+		} else {
+			enableScroll();
+		}
+	}, [isLearningModeShown]);
+
 	return (
 		<>
 			<div className={styles.background}>
@@ -252,6 +268,8 @@ function App() {
 							set={selectedSet}
 							updateSettings={updateSettings}
 							isLearningModeShown={isLearningModeShown}
+							disableScroll={disableScroll}
+							enableScroll={enableScroll}
 						></LearningMode>
 					) : (
 						""
