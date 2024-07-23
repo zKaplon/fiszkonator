@@ -187,6 +187,7 @@ export const LearningMode = ({ onExitBtnClick, set, updateSettings, enableScroll
 			}
 		};
 
+		// console.log(document.querySelector(`.${styles.card}`))
 		window.addEventListener("touchstart", handleTouchStart);
 		window.addEventListener("touchend", handleTouchEnd);
 
@@ -212,8 +213,10 @@ export const LearningMode = ({ onExitBtnClick, set, updateSettings, enableScroll
 	useEffect(() => {
 		if (!isEndScreenShown) {
 			disableScroll();
+			document.body.style.height = "90vh";
 		} else {
 			enableScroll();
+			document.body.style.height = "none";
 		}
 	}, [isEndScreenShown]);
 
