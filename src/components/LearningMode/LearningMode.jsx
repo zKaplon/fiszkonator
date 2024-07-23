@@ -213,10 +213,15 @@ export const LearningMode = ({ onExitBtnClick, set, updateSettings, enableScroll
 	useEffect(() => {
 		if (!isEndScreenShown) {
 			disableScroll();
-			document.body.style.height = "90vh";
+			document.addEventListener("touchmove", (e) => {
+				e.preventDefault();
+			}, { passive: false });
+			document.querySelector(`.${styles.card}`).addEventListener("touchmove", (e) => {
+				e.stopPropagation();		
+			})
 		} else {
 			enableScroll();
-			document.body.style.height = "none";
+			// document.body.style.height = "none";
 		}
 	}, [isEndScreenShown]);
 
