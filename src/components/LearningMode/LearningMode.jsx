@@ -13,7 +13,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 
-export const LearningMode = ({ onExitBtnClick, set, updateSettings, isLearningModeShown }) => {
+export const LearningMode = ({ onExitBtnClick, set, updateSettings }) => {
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [animationClass, setAnimationClass] = useState("");
 	const [knownFlashcards, setKnownFlashcards] = useState([]);
@@ -197,17 +197,17 @@ export const LearningMode = ({ onExitBtnClick, set, updateSettings, isLearningMo
 	}, [currentIndex, isEndScreenShown]);
 
 
-	useEffect(() => {
-		if (isLearningModeShown && !isEndScreenShown) {
-			window.scrollTo({
-				top: 0,
-				behavior: 'smooth'
-			});
-			document.body.style.overflow = "hidden";
-		} else {
-			document.body.style.overflow = "auto";
-		}
-	}, [isLearningModeShown, isEndScreenShown]);
+	// useEffect(() => {
+	// 	if (isLearningModeShown && !isEndScreenShown) {
+	// 		window.scrollTo({
+	// 			top: 0,
+	// 			behavior: 'smooth'
+	// 		});
+	// 		document.body.style.overflow = "hidden";
+	// 	} else {
+	// 		document.body.style.overflow = "auto";
+	// 	}
+	// }, [isLearningModeShown, isEndScreenShown]);
 
 	return (
 		<>
