@@ -5,8 +5,8 @@ import { Icon } from "../Icon/Icon";
 import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { db } from "../../firebase";
-import { collection, addDoc } from "firebase/firestore";
+// import { db } from "../../firebase";
+// import { collection, addDoc } from "firebase/firestore";
 
 export const RegisterForm = ({ showLoginForm, changeIsRegisterFormShown }) => {
 	const [email, setEmail] = useState("");
@@ -27,11 +27,11 @@ export const RegisterForm = ({ showLoginForm, changeIsRegisterFormShown }) => {
 			const user = userCredential.user;
 			console.log("User registered:", user);
 
-			await addDoc(collection(db, "users"), {
-				uid: user.uid,
-				email: user.email,
-				createdAt: new Date(),
-			});
+			// await addDoc(collection(db, "users"), {
+			// 	uid: user.uid,
+			// 	email: user.email,
+			// 	createdAt: new Date(),
+			// });
 			console.log("User data saved to Firestore");
 			errorText.textContent = ``;
 
