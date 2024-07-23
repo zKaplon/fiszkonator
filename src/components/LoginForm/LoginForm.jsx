@@ -48,7 +48,7 @@ export const LoginForm = ({ showMenu, saveUserData, setIsGuestMode }) => {
 				userData: newUserData,
 				sets: [],
 			};
-			const sessionExpiry = new Date().getTime() + 1 * 1000;
+			const sessionExpiry = new Date().getTime() + 600 * 1000;
 			localStorage.setItem("sessionData", JSON.stringify(sessionData));
 			localStorage.setItem("sessionExpiry", sessionExpiry.toString());
 

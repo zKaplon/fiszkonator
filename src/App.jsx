@@ -124,6 +124,8 @@ function App() {
 			console.error("Error logging out:", error);
 		}
 		location.reload();
+		localStorage.removeItem("sessionData");
+		localStorage.removeItem("sessionExpiry");
 	};
 
 	const changeVisibilityOfEditingMode = () => {
