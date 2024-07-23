@@ -219,16 +219,6 @@ function App() {
 			<div className={styles.background}>
 				<div className={styles.bgShadow}></div>
 
-				<button
-					className={styles.logoutBtn}
-					onClick={() => {
-						handleLogout();
-						setIsLoginModeShown(true);
-					}}
-				>
-					wyloguj
-				</button>
-
 				{!isEditingModeShown && !isLearningModeShown ? (
 					<header className={styles.titleBackground}>
 						<h1 className={styles.siteTitle}>FISZKONATOR</h1>
@@ -272,17 +262,28 @@ function App() {
 					!isEditingModeShown &&
 					!isLearningModeShown &&
 					!isLoginModeShown ? (
-						<SetOfFlashcardsList
-							onEditBtnClick={(setId) => editSet(setId)}
-							onDeleteBtnClick={(setId) =>
-								changeVisibilityOfDeletingSetPopup(setId)
-							}
-							onSetClick={(setId) => {
-								selectSetToLearn(setId);
-								changeVisibilityOfLearningMode();
-							}}
-							base={sets}
-						></SetOfFlashcardsList>
+						<>
+							<button
+								className={styles.logoutBtn}
+								onClick={() => {
+									handleLogout();
+									setIsLoginModeShown(true);
+								}}
+							>
+								wyloguj
+							</button>
+							<SetOfFlashcardsList
+								onEditBtnClick={(setId) => editSet(setId)}
+								onDeleteBtnClick={(setId) =>
+									changeVisibilityOfDeletingSetPopup(setId)
+								}
+								onSetClick={(setId) => {
+									selectSetToLearn(setId);
+									changeVisibilityOfLearningMode();
+								}}
+								base={sets}
+							></SetOfFlashcardsList>
+						</>
 					) : (
 						""
 					)}
