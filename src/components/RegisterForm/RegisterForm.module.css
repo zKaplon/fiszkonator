@@ -1,6 +1,7 @@
 .wrapper {
 	max-width: 44em;
 	padding: 3em 4em;
+	margin-bottom: 4em;
 	color: var(--light);
 	border-radius: 10px;
 	border: 2px solid rgba(255, 255, 255, 0.2);
@@ -71,9 +72,9 @@
 }
 
 .wrapper .btn:hover {
-background-color: var(--lightHover);
-border: 3px solid var(--intensiveBlue);
-color: var(--darkBlue);
+	background-color: var(--lightHover);
+	border: 3px solid var(--intensiveBlue);
+	color: var(--darkBlue);
 }
 
 .registerLink {
