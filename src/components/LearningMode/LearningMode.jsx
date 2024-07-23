@@ -13,7 +13,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 
-export const LearningMode = ({ onExitBtnClick, set, updateSettings }) => {
+export const LearningMode = ({
+	onExitBtnClick,
+	set,
+	updateSettings,
+	isLearningModeShown,
+}) => {
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [animationClass, setAnimationClass] = useState("");
 	const [knownFlashcards, setKnownFlashcards] = useState([]);
@@ -179,7 +184,7 @@ export const LearningMode = ({ onExitBtnClick, set, updateSettings }) => {
 		};
 
 		const handleGesture = () => {
-			if (touchendX < touchstartX - 60 ) {
+			if (touchendX < touchstartX - 60) {
 				handleDecline();
 			}
 			if (touchendX > touchstartX + 60) {
@@ -196,10 +201,28 @@ export const LearningMode = ({ onExitBtnClick, set, updateSettings }) => {
 		};
 	}, [currentIndex, isEndScreenShown]);
 
+	useEffect(() => {
+		if (isLearningModeShown && !isEndScreenShown) {
+			window.scrollTo({
+				top: 0,
+				behavior: "smooth",
+			});
+			document.body.style.overflow = "hidden";
+		} else {
+			document.body.style.overflow = "auto";
+		}
+	}, [isLearningModeShown, isEndScreenShown]);
+
 	return (
 		<>
 			{areSettingsShown ? (
-				<Settings set={set} onCancelBtnClick={changeVisibilityOfSettings} updateSettings={updateSettings} isDefFirstModeActivated={isDefFirstModeActivated} changeIsDefFirstModeActivated={changeIsDefFirstModeActivated}></Settings>
+				<Settings
+					set={set}
+					onCancelBtnClick={changeVisibilityOfSettings}
+					updateSettings={updateSettings}
+					isDefFirstModeActivated={isDefFirstModeActivated}
+					changeIsDefFirstModeActivated={changeIsDefFirstModeActivated}
+				></Settings>
 			) : (
 				" "
 			)}
@@ -229,8 +252,8 @@ export const LearningMode = ({ onExitBtnClick, set, updateSettings }) => {
 						></Button>
 					</div>
 				</div>
-			) : ( <>
-				
+			) : (
+				<>
 					<div className={styles.header}>
 						<p className={styles.setTitle}>{set.title}</p>
 						{(retryMode ? retryFlashcards : set.flashcards)[0] ? (
@@ -260,18 +283,27 @@ export const LearningMode = ({ onExitBtnClick, set, updateSettings }) => {
 					>
 						{(retryMode ? retryFlashcards : set.flashcards)[0] ? (
 							<>
-
 								<div className={styles.cardFront}>
 									<p className={styles.textFront}>
-										{(isDefFirstModeActivated) ? ((retryMode ? retryFlashcards : set.flashcards)[currentIndex].definition) : ((retryMode ? retryFlashcards : set.flashcards)[currentIndex].concept)}
+										{isDefFirstModeActivated
+											? (retryMode ? retryFlashcards : set.flashcards)[
+													currentIndex
+											  ].definition
+											: (retryMode ? retryFlashcards : set.flashcards)[
+													currentIndex
+											  ].concept}
 									</p>
 									<p className={styles.rotateText}>kliknij aby obrócić</p>
 								</div>
 								<div className={styles.cardBack}>
 									<p className={styles.textBack}>
 										{isDefFirstModeActivated
-											? (retryMode ? retryFlashcards : set.flashcards)[currentIndex].concept
-											: (retryMode ? retryFlashcards : set.flashcards)[currentIndex].definition}
+											? (retryMode ? retryFlashcards : set.flashcards)[
+													currentIndex
+											  ].concept
+											: (retryMode ? retryFlashcards : set.flashcards)[
+													currentIndex
+											  ].definition}
 									</p>
 									<p className={styles.rotateText}>kliknij aby obrócić</p>
 								</div>

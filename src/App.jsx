@@ -201,18 +201,7 @@ function App() {
 	const saveUserData = (userData) => {
 		setUserData(userData);
 	};
-
-	useEffect(() => {
-		if (isLearningModeShown) {
-			window.scrollTo({
-				top: 0,
-				behavior: "smooth",
-			});
-			document.body.style.overflow = "hidden";
-		} else {
-			document.body.style.overflow = "auto";
-		}
-	}, [isLearningModeShown]);
+	
 
 	return (
 		<>
