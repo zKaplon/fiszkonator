@@ -5,9 +5,8 @@
 	align-items: center;
 	min-width: 90%;
 	min-height: 20vh;
-	/* max-width: 250px; */
 	margin-bottom: 2em;
-	padding: 1em;
+	padding: 1.6em;
 	background-color: var(--light);
 	border: 1px solid var(--intensiveBlue);
 	border-radius: 8px;
@@ -15,7 +14,7 @@
 }
 
 .setTitle {
-	font-size: 2rem;
+	font-size: 3rem;
 	text-align: center;
 	text-transform: uppercase;
 	color: var(--intensiveBlue);
@@ -24,6 +23,7 @@
 
 .setDescription {
 	margin: 1em 0;
+	font-size: 1.6rem;
 	color: var(--dark);
 	word-break: break-all;
 }
@@ -36,7 +36,7 @@
 }
 
 .icons > svg {
-	padding: 0.5em;
+	/* padding: 0.5em; */
 	font-size: 1.6rem;
 	color: var(--intensiveBlue);
 }

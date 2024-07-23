@@ -277,7 +277,7 @@ function App() {
 									setIsLoginModeShown(true);
 								}}
 							>
-								wyloguj
+								Wyloguj
 							</button>
 							<SetOfFlashcardsList
 								onEditBtnClick={(setId) => editSet(setId)}
