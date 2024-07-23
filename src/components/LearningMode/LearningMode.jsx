@@ -210,20 +210,23 @@ export const LearningMode = ({ onExitBtnClick, set, updateSettings, enableScroll
 	// 	}
 	// }, [isLearningModeShown, isEndScreenShown]);
 
+
+const preventDefaultTouchMove = (e) => {
+	e.preventDefault();
+}
+
 	useEffect(() => {
 		if (!isEndScreenShown) {
 			disableScroll();
-			document.addEventListener("touchmove", (e) => {
-				e.preventDefault();
-			}, { passive: false });
+			document.addEventListener("touchmove", preventDefaultTouchMove, { passive: false });
+
 			// document.querySelector(`.${styles.card}`).addEventListener("touchmove", (e) => {
 			// 	e.stopPropagation();		
 			// })
 		} else {
 			enableScroll();
-			document.removeEventListener("touchmove", (e) => {
-				e.preventDefault();
-			}, { passive: false });
+			document.removeEventListener("touchmove", preventDefaultTouchMove, { passive: false });
+
 			// document.querySelector(`.${styles.card}`).removeEventListener("touchmove", (e) => {
 			// 	e.stopPropagation();		
 			// })
