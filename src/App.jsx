@@ -129,8 +129,7 @@ function App() {
 	};
 
 	const goOnTop = () => {
-		window.scrollTo(0, 0);
-		console.log('top');
+		window.scroll(0, 0);
 	};
 
 	const changeVisibilityOfEditingMode = () => {
@@ -139,8 +138,8 @@ function App() {
 	};
 
 	const changeVisibilityOfLearningMode = () => {
-		setIsLearningModeShown((prevValue) => !prevValue);
 		goOnTop();
+		setIsLearningModeShown((prevValue) => !prevValue);
 	};
 
 	const changeVisibilityOfDeletingSetPopup = (setId) => {
@@ -238,6 +237,12 @@ function App() {
 		}
 	}, [isLearningModeShown]);
 
+	const handleSetClick = (setId) => {
+		goOnTop();
+		selectSetToLearn(setId);
+		changeVisibilityOfLearningMode();
+	};
+
 	return (
 		<>
 			<div className={styles.background}>
@@ -303,11 +308,7 @@ function App() {
 								onDeleteBtnClick={(setId) =>
 									changeVisibilityOfDeletingSetPopup(setId)
 								}
-								onSetClick={(setId) => {
-									goOnTop();
-									selectSetToLearn(setId);
-									changeVisibilityOfLearningMode();
-								}}
+								onSetClick={handleSetClick}
 								base={sets}
 							></SetOfFlashcardsList>
 						</>
