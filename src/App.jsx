@@ -31,12 +31,13 @@ function App() {
 	const [isDeletingSetPopupShown, setIsDeletingSetPopupShown] = useState(false);
 	const [deletingSet, setDeletingSet] = useState(null);
 	const [isLoginModeShown, setIsLoginModeShown] = useState(true);
+	const [isGuestMode, setIsGuestMode] = useState(false);
 
 	const auth = getAuth();
 
 	const handleSave = async () => {
 		const user = auth.currentUser;
-		if (user) {
+		if (user && !isGuestMode) {
 			try {
 				const userDocRef = doc(db, "users", user.uid);
 				await setDoc(
@@ -45,10 +46,12 @@ function App() {
 					{ merge: true }
 				);
 				console.log("User data saved to Firestore");
-				console.log(sets);
 			} catch (error) {
 				console.error("Error saving user data:", error);
 			}
+		} else if (isGuestMode) {
+			localStorage.setItem("guestData", JSON.stringify({ userData, sets }));
+			console.log("User data saved to localStorage");
 		} else {
 			console.error("No user is signed in");
 		}
@@ -56,7 +59,7 @@ function App() {
 
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, (user) => {
-			if (user) {
+			if (user && !isGuestMode) {
 				const fetchData = async () => {
 					try {
 						const userDocRef = doc(db, "users", user.uid);
@@ -73,6 +76,13 @@ function App() {
 				};
 
 				fetchData();
+			} else if (isGuestMode) {
+				const guestData = localStorage.getItem("guestData");
+				if (guestData) {
+					const parsedData = JSON.parse(guestData);
+					setUserData(parsedData.userData);
+					setSets(parsedData.sets);
+				}
 			} else {
 				setUserData({});
 				setSets([]);
@@ -80,7 +90,7 @@ function App() {
 		});
 
 		return () => unsubscribe();
-	}, [auth]);
+	}, [auth, isGuestMode]);
 
 	useEffect(() => {
 		handleSave();
@@ -207,6 +217,7 @@ function App() {
 							<LoginForm
 								showMenu={showMenu}
 								saveUserData={saveUserData}
+								setIsGuestMode={setIsGuestMode}
 							></LoginForm>
 						</>
 					) : (

@@ -6,7 +6,7 @@ import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 import { RegisterForm } from "../RegisterForm/RegisterForm";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
-export const LoginForm = ({ showMenu, saveUserData }) => {
+export const LoginForm = ({ showMenu, saveUserData, setIsGuestMode }) => {
 	const [isLoginFormShown, setIsLoginFormShown] = useState(false);
 	const [isRegisterFormShown, setIsRegisterFormShown] = useState(false);
 	const [email, setEmail] = useState("");
@@ -48,7 +48,7 @@ export const LoginForm = ({ showMenu, saveUserData }) => {
 				userData: newUserData,
 				sets: [],
 			};
-			const sessionExpiry = new Date().getTime() + 1 * 1000; // 30 sekund
+			const sessionExpiry = new Date().getTime() + 1 * 1000;
 			localStorage.setItem("sessionData", JSON.stringify(sessionData));
 			localStorage.setItem("sessionExpiry", sessionExpiry.toString());
 
@@ -136,7 +136,7 @@ export const LoginForm = ({ showMenu, saveUserData }) => {
 					<Button
 						text="Wejdź jako gość"
 						btnClass="guestBtn"
-						onClick={showMenu}
+						onClick={()=>{setIsGuestMode(true);showMenu();}}
 					></Button>
 				</div>
 			)}
