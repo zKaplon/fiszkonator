@@ -202,8 +202,6 @@ function App() {
 		setUserData(userData);
 	};
 
-
-
 	return (
 		<>
 			<div className={styles.background}>
@@ -234,6 +232,7 @@ function App() {
 							onExitBtnClick={changeVisibilityOfLearningMode}
 							set={selectedSet}
 							updateSettings={updateSettings}
+							isLearningModeShown={isLearningModeShown}
 						></LearningMode>
 					) : (
 						""
