@@ -112,6 +112,7 @@ export function EditSetOfFlashcards({
 					className={styles.textarea}
 					value={description}
 					onChange={(e) => setDescription(e.target.value)}
+					maxLength={160}
 				></textarea>
 			</div>
 

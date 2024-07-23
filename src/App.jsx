@@ -32,6 +32,8 @@ function App() {
 	const [deletingSet, setDeletingSet] = useState(null);
 	const [isLoginModeShown, setIsLoginModeShown] = useState(true);
 	const [isGuestMode, setIsGuestMode] = useState(false);
+	const [isSetsOfFlashcardsListShown, setIsSetsOfFlashcardsListShown] =
+		useState(false);
 
 	const auth = getAuth();
 
@@ -125,6 +127,7 @@ function App() {
 	const changeVisibilityOfDeletingSetPopup = (setId) => {
 		setDeletingSet(sets.find((set) => set.id === setId));
 		setIsDeletingSetPopupShown((prevValue) => !prevValue);
+		setIsSetsOfFlashcardsListShown(false);
 	};
 
 	const addNewSet = (title, description, flashcards) => {
@@ -192,6 +195,7 @@ function App() {
 
 	const showMenu = () => {
 		setIsLoginModeShown(false);
+		setIsSetsOfFlashcardsListShown(true);
 	};
 
 	const saveUserData = (userData) => {
@@ -241,7 +245,10 @@ function App() {
 					) : (
 						""
 					)}
-					{!isEditingModeShown && !isLearningModeShown && !isLoginModeShown ? (
+					{isSetsOfFlashcardsListShown &&
+					!isEditingModeShown &&
+					!isLearningModeShown &&
+					!isLoginModeShown ? (
 						<SetOfFlashcardsList
 							onEditBtnClick={(setId) => editSet(setId)}
 							onDeleteBtnClick={(setId) =>
@@ -258,7 +265,10 @@ function App() {
 					)}
 				</main>
 
-				{!isEditingModeShown && !isLearningModeShown && !isLoginModeShown ? (
+				{isSetsOfFlashcardsListShown &&
+				!isEditingModeShown &&
+				!isLearningModeShown &&
+				!isLoginModeShown ? (
 					<Button
 						icon={faCirclePlus}
 						btnClass={`${"addBtn"}`}
@@ -274,8 +284,12 @@ function App() {
 					onConfirmBtnClick={() => {
 						deleteSet(deletingSet.id);
 						changeVisibilityOfDeletingSetPopup();
+						setIsSetsOfFlashcardsListShown(true);
 					}}
-					onDeclineBtnClick={changeVisibilityOfDeletingSetPopup}
+					onDeclineBtnClick={() => {
+						changeVisibilityOfDeletingSetPopup();
+						setIsSetsOfFlashcardsListShown(true);
+					}}
 				></DeletingSetPopup>
 			) : (
 				""
