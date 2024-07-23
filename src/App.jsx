@@ -128,18 +128,25 @@ function App() {
 		localStorage.removeItem("sessionExpiry");
 	};
 
+	const goOnTop = () => {
+		window.scrollTo(0, 0);
+	};
+
 	const changeVisibilityOfEditingMode = () => {
 		setIsEditingModeShown((prevValue) => !prevValue);
+		goOnTop();
 	};
 
 	const changeVisibilityOfLearningMode = () => {
 		setIsLearningModeShown((prevValue) => !prevValue);
+		goOnTop();
 	};
 
 	const changeVisibilityOfDeletingSetPopup = (setId) => {
 		setDeletingSet(sets.find((set) => set.id === setId));
 		setIsDeletingSetPopupShown((prevValue) => !prevValue);
 		setIsSetsOfFlashcardsListShown(false);
+		goOnTop();
 	};
 
 	const addNewSet = (title, description, flashcards) => {
