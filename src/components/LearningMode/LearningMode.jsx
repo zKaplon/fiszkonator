@@ -229,8 +229,7 @@ export const LearningMode = ({ onExitBtnClick, set, updateSettings }) => {
 						></Button>
 					</div>
 				</div>
-			) : (
-				<>
+			) : ( <div className={styles.wrapper}>
 					<div className={styles.header}>
 						<p className={styles.setTitle}>{set.title}</p>
 						{(retryMode ? retryFlashcards : set.flashcards)[0] ? (
@@ -302,7 +301,7 @@ export const LearningMode = ({ onExitBtnClick, set, updateSettings }) => {
 					) : (
 						""
 					)}
-				</>
+				</div>
 			)}
 		</>
 	);
