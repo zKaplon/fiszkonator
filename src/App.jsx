@@ -129,7 +129,7 @@ function App() {
 	};
 
 	const goOnTop = () => {
-		window.scroll(0, 0);
+		window.scroll(0, -100);
 	};
 
 	const changeVisibilityOfEditingMode = () => {
