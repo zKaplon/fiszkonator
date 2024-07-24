@@ -238,10 +238,16 @@ function App() {
 	}, [isLearningModeShown]);
 
 	const handleSetClick = (setId) => {
-		goOnTop();
 		selectSetToLearn(setId);
 		changeVisibilityOfLearningMode();
+		goOnTop();
 	};
+
+
+
+
+
+	
 
 	return (
 		<>
