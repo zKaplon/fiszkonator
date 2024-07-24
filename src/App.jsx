@@ -225,6 +225,7 @@ function App() {
 		goOnTop();
 		document.body.style.overflow = "hidden";
 		document.body.style.position = "fixed";
+		document.body.style.right = "0";
 	};
 
 	const enableScroll = () => {
