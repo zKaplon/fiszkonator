@@ -240,7 +240,7 @@ function App() {
 		} else {
 			enableScroll();
 		}
-	}, [isLearningModeShown]);
+	}, [isLearningModeShown ]);
 
 	const handleSetClick = (setId) => {
 		selectSetToLearn(setId);
