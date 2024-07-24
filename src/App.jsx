@@ -129,7 +129,7 @@ function App() {
 	};
 
 	const goOnTop = () => {
-		window.scroll(0, -100);
+		window.scroll(0, 0);
 	};
 
 	const changeVisibilityOfEditingMode = () => {
@@ -222,11 +222,14 @@ function App() {
 	};
 
 	const disableScroll = () => {
+		goOnTop();
 		document.body.style.overflow = "hidden";
+		document.body.style.position = "fixed";
 	};
 
 	const enableScroll = () => {
 		document.body.style.overflow = "auto";
+		document.body.style.position = "static";
 	};
 
 	useEffect(() => {
@@ -240,14 +243,7 @@ function App() {
 	const handleSetClick = (setId) => {
 		selectSetToLearn(setId);
 		changeVisibilityOfLearningMode();
-		goOnTop();
 	};
-
-
-
-
-
-	
 
 	return (
 		<>
