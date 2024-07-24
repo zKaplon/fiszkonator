@@ -7,14 +7,25 @@
 }
 
 .addBtn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
 	height: 4em;
 	width: 4em;
 	margin: 2em 0 3em;
 	background-color: var(--light);
+
 	border: none;
 	border-radius: 50%;
 	cursor: pointer;
 	z-index: 2;
+	transition: color 0.2s;
+}
+
+.addBtn svg {
+	width: 101%;
+	height: 101%;
 }
 
 .addBtn:hover {
@@ -24,7 +35,8 @@
 .editBtn,
 .deleteBtn {
 	padding: 0.8em;
-	width: 3em;
+	width: 3.4em;
+	transition: color 0.2s;
 }
 
 .editBtn:hover,
@@ -41,12 +53,31 @@
 	color: rgb(227, 72, 72);
 	border: 0.2em solid rgb(227, 72, 72);
 	border-radius: 50%;
+
+	transition: scale 0.2s;
 }
 
 .confirmBtn {
 	color: rgb(72, 227, 72);
 	border: 0.2em solid rgb(72, 227, 72);
 	background-color: rgb(220, 249, 215);
+}
+
+.undoBtn {
+	height: 4.5em;
+	width: 4.5em;
+	padding: 0.6em;
+	background-color: var(--light);
+	color: var(--intensiveBlue);
+	border-radius: 50%;
+	border: 2px solid var(--intensiveBlue);
+	transition: scale 0.2s;
+}
+
+.declineBtn:hover,
+.confirmBtn:hover,
+.undoBtn:hover {
+	scale: 1.2;
 }
 
 .xBtn {
@@ -60,37 +91,51 @@
 
 .exitBtn,
 .settingsBtn {
-	height: 2.4em;
-	width: 2.4em;
+	height: 3em;
+	width: 3em;
 	padding: 0.3em;
 	color: var(--light);
 	border: 3px solid var(--light);
 	border-radius: 8px;
+	transition: scale 0.2s;
 }
 
-.undoBtn {
-	height: 4.5em;
-	width: 4.5em;
-	padding: 0.6em;
-	background-color: var(--light);
-	color: var(--intensiveBlue);
-	border-radius: 50%;
-	border: 2px solid var(--intensiveBlue);
+.exitBtn:hover,
+.settingsBtn:hover {
+	scale: 1.2;
 }
 
 .repeatWrongBtn,
 .repeatBtn,
 .houseBtn {
-	width: 12em;
-	height: 12em;
-	margin: 4em 0;
+	width: 100%;
+	margin: 2em 0;
+	padding: 2em;
 	color: var(--light);
 	text-shadow: 2px 2px 3px var(--darkBlue);
+	border-radius: 8px;
+	border: 3px solid var(--light);
+
+	transition: scale 0.3s;
+}
+
+.repeatWrongBtn:hover,
+.repeatBtn:hover,
+.houseBtn:hover {
+	scale: 1.15;
+}
+
+.repeatWrongBtn svg,
+.repeatBtn svg,
+.houseBtn svg {
+	height: 50%;
+	width: 50%;
 }
 
 .repeatWrongBtn p,
 .repeatBtn p,
 .houseBtn p {
+	margin-top: 1em;
 	font-size: 2rem;
 }
 
@@ -108,19 +153,39 @@
 
 .loginBtn,
 .guestBtn {
-	padding: 1em 0.5em;
+	padding: 2em 1em;
+	font-size: 2rem;
 	color: var(--light);
+	text-transform: uppercase;
+	background-color: #a9a9a949;
 	border-radius: 8px;
 	border: 2px solid rgba(255, 255, 255, 0.2);
-	background-color: #a9a9a949;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-	text-transform: uppercase;
 	transition: background-color 0.2s;
 }
 
 .loginBtn:hover,
 .guestBtn:hover {
 	background-color: #6e6e6e49;
+}
+
+.logoutBtn {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 0.6em;
+	font-size: 1.2rem;
+	color: var(--light);
+	background: none;
+	border: none;
+	outline: none;
+	cursor: pointer;
+
+	z-index: 2;
+}
+
+.logoutBtn:hover {
+	text-decoration: underline;
 }
 
 @media (min-width: 576px) {
@@ -138,7 +203,6 @@
 	.confirmBtn {
 		height: 6em;
 		width: 6em;
-		padding: 0.4em;
 	}
 
 	.loginBtn,
@@ -147,20 +211,25 @@
 		padding: 2em 1em;
 		font-size: 1.8rem;
 	}
+
+	.logoutBtn {
+		font-size: 1.8rem;
+	}
 }
 
 @media (min-width: 768px) {
-	/* .addBtn {
-		height: 6em;
-		width: 6em;
-		margin: 4em 0;
+	.repeatWrongBtn,
+	.repeatBtn,
+	.houseBtn {
+	min-height: 250px;
+	min-width: 150px;
 	}
 
-	.declineBtn, .confirmBtn {
-		height: 8em;
-		width: 8em;
-		padding: .6em;
-	} */
+	.repeatWrongBtn p,
+	.repeatBtn p,
+	.houseBtn p {
+	font-size: 1.6rem;
+	}
 }
 
 @media (min-width: 992px) {

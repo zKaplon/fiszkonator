@@ -240,7 +240,7 @@ function App() {
 		} else {
 			enableScroll();
 		}
-	}, [isLearningModeShown ]);
+	}, [isLearningModeShown]);
 
 	const handleSetClick = (setId) => {
 		selectSetToLearn(setId);
@@ -298,15 +298,14 @@ function App() {
 					!isLearningModeShown &&
 					!isLoginModeShown ? (
 						<>
-							<button
-								className={styles.logoutBtn}
+							<Button
+								btnClass='logoutBtn'
 								onClick={() => {
 									handleLogout();
 									setIsLoginModeShown(true);
-								}}
+								}}text="Wyloguj"
 							>
-								Wyloguj
-							</button>
+							</Button>
 							<SetOfFlashcardsList
 								onEditBtnClick={(setId) => editSet(setId)}
 								onDeleteBtnClick={(setId) =>

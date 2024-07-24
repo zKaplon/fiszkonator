@@ -9,6 +9,9 @@
 }
 
 .wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	text-align: center;
 }
 
@@ -65,7 +68,6 @@
 	color: var(--dark);
 	text-align: center;
 }
-
 
 .draggableItem {
 	padding: 1em 0;

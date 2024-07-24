@@ -49,11 +49,14 @@ export function Button({ icon, btnClass, onClick, text }) {
 	if (btnClass === "guestBtn") {
 		btnType = styles.guestBtn;
 	}
+	if (btnClass === "logoutBtn") {
+		btnType = styles.logoutBtn;
+	}
 
 	return (
 		<button className={`${styles.btnReset} ${btnType}`} onClick={onClick}>
 			{icon ? <Icon icon={icon}></Icon> : ""}
-			<p>{text}</p>
+			{text ? <p>{text}</p> : ""}
 		</button>
 	);
 }
