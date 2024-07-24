@@ -4,14 +4,20 @@ import styles from "./LoginForm.module.css";
 import { Icon } from "../Icon/Icon";
 import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 import { RegisterForm } from "../RegisterForm/RegisterForm";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import {
+	getAuth,
+	signInWithEmailAndPassword,
+	sendPasswordResetEmail,
+} from "firebase/auth";
 
 export const LoginForm = ({ showMenu, saveUserData, setIsGuestMode }) => {
 	const [isLoginFormShown, setIsLoginFormShown] = useState(false);
 	const [isRegisterFormShown, setIsRegisterFormShown] = useState(false);
+	const [isResetFormShown, setIsResetFormShown] = useState(false);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [rememberMe, setRememberMe] = useState(false);
+	const [resetEmail, setResetEmail] = useState("");
 
 	useEffect(() => {
 		const savedEmail = localStorage.getItem("email");
@@ -25,6 +31,7 @@ export const LoginForm = ({ showMenu, saveUserData, setIsGuestMode }) => {
 
 	const showLoginForm = () => {
 		setIsLoginFormShown(true);
+		setIsResetFormShown(false);
 	};
 
 	const changeIsRegisterFormShown = () => {
@@ -70,6 +77,27 @@ export const LoginForm = ({ showMenu, saveUserData, setIsGuestMode }) => {
 		setRememberMe(!rememberMe);
 	};
 
+	const handleResetPassword = async (e) => {
+		e.preventDefault();
+		const auth = getAuth();
+		try {
+			await sendPasswordResetEmail(auth, resetEmail);
+			alert("Email do resetowania hasła został wysłany!");
+		} catch (error) {
+			alert("Wystąpił błąd podczas wysyłania emaila do resetowania hasła.");
+		}
+	};
+
+	const showResetForm = () => {
+		setIsResetFormShown(true);
+		setIsLoginFormShown(false);
+	};
+
+	const cancelReset = () => {
+		setIsResetFormShown(false);
+		setIsLoginFormShown(true);
+	};
+
 	return (
 		<>
 			{isRegisterFormShown ? (
@@ -77,6 +105,27 @@ export const LoginForm = ({ showMenu, saveUserData, setIsGuestMode }) => {
 					showLoginForm={showLoginForm}
 					changeIsRegisterFormShown={changeIsRegisterFormShown}
 				></RegisterForm>
+			) : isResetFormShown ? (
+				<div className={styles.wrapper}>
+					<form onSubmit={handleResetPassword}>
+						<h1>Resetowanie hasła</h1>
+						<div className={styles.inputBox}>
+							<input
+								type="text"
+								placeholder="E-mail"
+								required
+								value={resetEmail}
+								onChange={(e) => setResetEmail(e.target.value)}
+							/>
+						</div>
+						<button type="submit" className={styles.btn}>
+							Zresetuj hasło
+						</button>
+						<button type="button" className={styles.btn} onClick={cancelReset}>
+							Anuluj
+						</button>
+					</form>
+				</div>
 			) : isLoginFormShown ? (
 				<div className={styles.wrapper}>
 					<form action="" onSubmit={handleLogin}>
@@ -111,7 +160,9 @@ export const LoginForm = ({ showMenu, saveUserData, setIsGuestMode }) => {
 								/>
 								Zapamiętaj
 							</label>
-							<a href="#">Zapomniałeś hasła?</a>
+							<a href="#" onClick={showResetForm}>
+								Zapomniałeś hasła?
+							</a>
 						</div>
 						<p className={`errorText ${styles.errorText}`}></p>
 						<button type="submit" className={styles.btn}>
@@ -136,7 +187,10 @@ export const LoginForm = ({ showMenu, saveUserData, setIsGuestMode }) => {
 					<Button
 						text="Wejdź jako gość"
 						btnClass="guestBtn"
-						onClick={()=>{setIsGuestMode(true);showMenu();}}
+						onClick={() => {
+							setIsGuestMode(true);
+							showMenu();
+						}}
 					></Button>
 				</div>
 			)}
