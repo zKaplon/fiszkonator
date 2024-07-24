@@ -166,37 +166,39 @@ export const LearningMode = ({ onExitBtnClick, set, updateSettings, enableScroll
 	useEffect(() => {
 		let touchstartX = 0;
 		let touchendX = 0;
-
+	
 		const handleTouchStart = (event) => {
-			!isEndScreenShown ? (touchstartX = event.changedTouches[0].screenX) : "";
+			if (!isEndScreenShown) {
+				touchstartX = event.changedTouches[0].screenX;
+			}
 		};
-
+	
 		const handleTouchEnd = (event) => {
 			if (!isEndScreenShown) {
 				touchendX = event.changedTouches[0].screenX;
-				handleGesture();
+				if (touchendX < touchstartX - 60) {
+					handleDecline();
+				}
+				if (touchendX > touchstartX + 60) {
+					handleConfirm();
+				}
 			}
 		};
-
-		const handleGesture = () => {
-			if (touchendX < touchstartX - 60 ) {
-				handleDecline();
-			}
-			if (touchendX > touchstartX + 60) {
-				handleConfirm();
-			}
-		};
-
-		// console.log(document.querySelector(`.${styles.card}`))
-		window.addEventListener("touchstart", handleTouchStart);
-		window.addEventListener("touchend", handleTouchEnd);
-
+	
+		const cardElement = document.querySelector(`.${styles.card}`);
+		if (cardElement && !isEndScreenShown) {
+			cardElement.addEventListener("touchstart", handleTouchStart);
+			cardElement.addEventListener("touchend", handleTouchEnd);
+		}
+	
 		return () => {
-			window.removeEventListener("touchstart", handleTouchStart);
-			window.removeEventListener("touchend", handleTouchEnd);
+			if (cardElement) {
+				cardElement.removeEventListener("touchstart", handleTouchStart);
+				cardElement.removeEventListener("touchend", handleTouchEnd);
+			}
 		};
 	}, [currentIndex, isEndScreenShown]);
-
+	
 
 	// useEffect(() => {
 	// 	if (isLearningModeShown && !isEndScreenShown) {
@@ -211,21 +213,21 @@ export const LearningMode = ({ onExitBtnClick, set, updateSettings, enableScroll
 	// }, [isLearningModeShown, isEndScreenShown]);
 
 
-const preventDefaultTouchMove = (e) => {
-	e.preventDefault();
-}
+// const preventDefaultTouchMove = (e) => {
+// 	e.preventDefault();
+// }
 
 	useEffect(() => {
 		if (!isEndScreenShown) {
 			disableScroll();
-			document.addEventListener("touchmove", preventDefaultTouchMove, { passive: false });
+			// document.addEventListener("touchmove", preventDefaultTouchMove, { passive: false });
 
 			// document.querySelector(`.${styles.card}`).addEventListener("touchmove", (e) => {
 			// 	e.stopPropagation();		
 			// })
 		} else {
 			enableScroll();
-			document.removeEventListener("touchmove", preventDefaultTouchMove, { passive: false });
+			// document.removeEventListener("touchmove", preventDefaultTouchMove, { passive: false });
 
 			// document.querySelector(`.${styles.card}`).removeEventListener("touchmove", (e) => {
 			// 	e.stopPropagation();		
